@@ -1,0 +1,25 @@
+{
+  "name": "password-sas-web",
+  "version": "1.0.0",
+  "description": "Sitio web dinámico para PassWord S.A.S.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "express",
+    "node"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/blob": "^0.23.4",
+    "body-parser": "^2.2.1",
+    "dotenv": "^17.2.3",
+    "express": "^4.18.2",
+    "express-session": "^1.18.2",
+    "mongoose": "^8.20.2",
+    "mongodb-memory-server": "^9.1.6",
+    "multer": "^2.0.2"
+  }
+}

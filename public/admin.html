@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+       
+    <meta charset="UTF-8">
+       
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Administración - PassWord S.A.S.</title>
+       
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="login-layout">
+        <div class="login-box" id="loginView">
+                <h2>Acceso Administrativo</h2>
+                <form id="loginForm">
+                        <input type="text" id="username" placeholder="Usuario (admin)" required>
+                        <input type="password" id="password" placeholder="Contraseña (12345)" required>
+                        <button type="submit">Iniciar Sesión</button>
+                    </form>
+                <p id="message" class="message"></p>
+            </div>
+
+        <div class="admin-panel" id="adminView" style="display: none;">
+                <header class="admin-header">
+                        <h1 class="admin-title">Panel de PassWord S.A.S.</h1>
+                        <button id="logoutButton" class="btn secondary">Cerrar Sesión</button>
+                    </header>
+
+                <main class="admin-main">
+                        <section class="upload-section card">
+                                <h3 class="section-title">Subir Nueva Imagen</h3>
+                                <form id="imageUploadForm" enctype="multipart/form-data" class="upload-form">
+                                        <div class="form-row">
+                                                <label for="categorySelect">Destino</label>
+                                                <select id="categorySelect" name="category" class="input-select">
+                                                        <option value="gallery">Galería</option>
+                                                        <option value="tips">Tips</option>
+                                                    </select>
+                                            </div>
+
+                                        <div id="galleryFields" class="form-row" style="margin-top:6px;">
+                                                <label for="galleryTitle">Título (Galería)</label>
+                                                <input type="text" id="galleryTitle" name="title" class="input-text"
+                            placeholder="Título para Galería (opcional)">
+                                            </div>
+
+                                        <div id="tipsFields" class="form-row" style="margin-top:6px; display:none;">
+                                                <label for="tipsTitle">Título (Tip)</label>
+                                                <input type="text" id="tipsTitle" name="title" class="input-text"
+                            placeholder="Título para Tip">
+                                                <label for="tipsDescription">Descripción</label>
+                                                <input type="text" id="tipsDescription" name="description"
+                            class="input-text" placeholder="Descripción para Tip">
+                                            </div>
+
+                                        <div class="form-row">
+                                                <label for="imageFile">Archivo</label>
+                                                <input type="file" name="imagen" id="imageFile" **accept="image/*" **
+                            required class="input-file">
+                                            </div>
+
+                                        <div class="form-actions">
+                                                <button type="submit" class="btn primary">Cargar Imagen</button>
+                                                <span id="uploadMessage" class="muted-message"></span>
+                                            </div>
+                                    </form>
+                            </section>
+
+                        <section class="image-list card">
+                                <h3 class="section-title">Imágenes Actuales</h3>
+                                <ul id="currentImagesList" class="images-list"></ul>
+                            </section>
+                    </main>
+            </div>
+</body>
+<script src="js/admin.js"></script>
+
+</html>
