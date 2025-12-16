@@ -46,11 +46,17 @@ const sessionConfig = {
 
 // Usar MongoDB Store si hay URI disponible (Recomendado para Producción/Vercel)
 if (process.env.MONGODB_URI) {
-    sessionConfig.store = MongoStore.create({
-        mongoUrl: process.env.MONGODB_URI,
-        collectionName: 'sessions'
-    });
-    console.log('🔒 Configurada persistencia de sesiones en MongoDB.');
+    try {
+        sessionConfig.store = MongoStore.create({
+            mongoUrl: process.env.MONGODB_URI,
+            collectionName: 'sessions',
+            ttl: 24 * 60 * 60 // 1 day
+        });
+        console.log('🔒 Configurada persistencia de sesiones en MongoDB.');
+    } catch (err) {
+        console.error('❌ Error configurando MongoStore:', err);
+        console.warn('⚠️  Usando MemoryStore (fallback) debido a error en configuración de MongoDB.');
+    }
 } else {
     console.warn('⚠️  Usando MemoryStore para sesiones (No persistente en Vercel). Configure MONGODB_URI.');
 }
@@ -146,6 +152,11 @@ app.get('/api/check-login', (req, res) => {
     } else {
         res.status(401).json({ loggedIn: false });
     }
+});
+
+// Ruta de salud para verificar que el servidor Vercel responde al menos
+app.get('/api/health', (req, res) => {
+    res.status(200).send('OK - Server is running');
 });
 
 // 5. Ruta POST para manejar el Login
