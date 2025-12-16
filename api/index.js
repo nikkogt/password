@@ -21,7 +21,10 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 // Nota: El servidor Express está listo con MongoDB
 
 const bodyParser = require('body-parser'); // Para procesar datos del formulario
+const bodyParser = require('body-parser'); // Para procesar datos del formulario
 const session = require('express-session'); // Para manejar sesiones
+const MongoStore = require('connect-mongo');
+
 
 // --- CONFIGURACIÓN DEL SERVIDOR ---
 
@@ -30,7 +33,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // 2. Configuración de la Sesión
-app.use(session({
+// 2. Configuración de la Sesión
+const sessionConfig = {
     secret: 'CLAVE_SECRETA_DE_PASSWORD_SAS',
     resave: false,
     saveUninitialized: false,
@@ -39,8 +43,20 @@ app.use(session({
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000 // 24 horas
     }
-}));
-// 1. Configuración de almacenamiento: Usar memoria para Vercel Blob
+};
+
+// Usar MongoDB Store si hay URI disponible (Recomendado para Producción/Vercel)
+if (process.env.MONGODB_URI) {
+    sessionConfig.store = MongoStore.create({
+        mongoUrl: process.env.MONGODB_URI,
+        collectionName: 'sessions'
+    });
+    console.log('🔒 Configurada persistencia de sesiones en MongoDB.');
+} else {
+    console.warn('⚠️  Usando MemoryStore para sesiones (No persistente en Vercel). Configure MONGODB_URI.');
+}
+
+app.use(session(sessionConfig));
 const storage = multer.memoryStorage();
 
 const upload = multer({ storage: storage });
