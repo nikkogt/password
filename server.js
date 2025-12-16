@@ -48,7 +48,16 @@ const upload = multer({ storage: storage });
 // 2. Conectar a MongoDB
 // 2. Conectar a MongoDB
 require('dotenv').config();
-const { MongoMemoryServer } = require('mongodb-memory-server');
+
+// Solo importar MongoMemoryServer en desarrollo/local
+let MongoMemoryServer;
+if (process.env.NODE_ENV !== 'production') {
+    try {
+        MongoMemoryServer = require('mongodb-memory-server').MongoMemoryServer;
+    } catch (e) {
+        console.log('MongoMemoryServer no encontrado, omitiendo...');
+    }
+}
 
 const connectDB = async () => {
     let mongoURI = process.env.MONGODB_URI;
@@ -65,14 +74,21 @@ const connectDB = async () => {
         try {
             await mongoose.connect('mongodb://127.0.0.1:27017/password', { serverSelectionTimeoutMS: 2000 });
             console.log('✅ Conectado a MongoDB (Local 127.0.0.1)');
+            console.log('✅ Conectado a MongoDB (Local 127.0.0.1)');
         } catch (localErr) {
-            console.log('⚠️ No se encontró MongoDB local, iniciando base de datos en memoria...');
-            // Fallback: In-Memory Database
-            const mongod = await MongoMemoryServer.create();
-            const uri = mongod.getUri();
-            await mongoose.connect(uri);
-            console.log('✅ Conectado a MongoDB en Memoria (Datos temporales)');
-            console.log('ℹ️  Nota: Los datos se borrarán al detener el servidor.');
+            console.log('⚠️ No se encontró MongoDB local.');
+
+            // Fallback: In-Memory Database (SOLO si no estamos en producción)
+            if (process.env.NODE_ENV !== 'production' && MongoMemoryServer) {
+                console.log('Iniciando base de datos en memoria...');
+                const mongod = await MongoMemoryServer.create();
+                const uri = mongod.getUri();
+                await mongoose.connect(uri);
+                console.log('✅ Conectado a MongoDB en Memoria (Datos temporales)');
+                console.log('ℹ️  Nota: Los datos se borrarán al detener el servidor.');
+            } else {
+                console.error('❌ Error: No se pudo conectar a ninguna base de datos y no se puede usar MongoMemoryServer en producción.');
+            }
         }
 
     } catch (err) {
@@ -150,14 +166,17 @@ function requireAdmin(req, res, next) {
 
 // --- INICIO DEL SERVIDOR ---
 
-// Esperar a que MongoDB se conecte antes de iniciar
-mongoose.connection.once('connected', () => {
+// Para Vercel: Exportar la app
+module.exports = app;
+
+// Iniciar servidor (fuera del callback de conexión para evitar timeout en Vercel)
+if (require.main === module) {
     const server = app.listen(PORT, () => {
         const actualPort = server.address().port;
         console.log(`🚀 Servidor de PassWord S.A.S. corriendo en http://localhost:${actualPort}`);
         console.log(`📂 Panel de Administración: http://localhost:${actualPort}/admin.html`);
     });
-});
+}
 
 // --- RUTA PROTEGIDA: Carga de Imagen ---
 app.post('/api/imagenes/subir', requireAdmin, upload.single('imagen'), async (req, res) => {
