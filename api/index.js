@@ -22,7 +22,7 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 const bodyParser = require('body-parser'); // Para procesar datos del formulario
 const session = require('express-session'); // Para manejar sesiones
-const MongoStore = require('connect-mongo');
+const MongoStore = require('connect-mongo').default || require('connect-mongo');
 
 
 // --- CONFIGURACIÓN DEL SERVIDOR ---
