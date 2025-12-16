@@ -21,7 +21,6 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 // Nota: El servidor Express está listo con MongoDB
 
 const bodyParser = require('body-parser'); // Para procesar datos del formulario
-const bodyParser = require('body-parser'); // Para procesar datos del formulario
 const session = require('express-session'); // Para manejar sesiones
 const MongoStore = require('connect-mongo');
 
