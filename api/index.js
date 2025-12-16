@@ -1,5 +1,4 @@
 // 1. Importar la librería Express
-// ... (resto de imports)
 const multer = require('multer');
 const fs = require('fs'); // Módulo para manejar archivos del sistema operativo
 const express = require('express');
@@ -9,14 +8,15 @@ const mongoose = require('mongoose');
 
 // 2. Crear una instancia de la aplicación Express
 const app = express();
-const PORT = process.env.PORT || 0; // Use 0 for random available port
+// Nota: en Vercel, PORT no es necesario, pero lo mantenemos para local
+const PORT = process.env.PORT || 0;
 
 // --- CONFIGURACIÓN DEL SERVIDOR ---
 
 // 3. Servir archivos estáticos: HTML, CSS, JS e imágenes
-// Esto le dice a Express que todo lo que está dentro de 'public' puede ser accedido directamente por el navegador.
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Ajuste de rutas para Vercel: salir de 'api' para buscar 'public'
+app.use(express.static(path.join(__dirname, '../public')));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Nota: El servidor Express está listo con MongoDB
 
@@ -46,11 +46,12 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 // 2. Conectar a MongoDB
-// 2. Conectar a MongoDB
 require('dotenv').config();
 
 // Solo importar MongoMemoryServer en desarrollo/local
 let MongoMemoryServer;
+// Ajuste: verificar process.env.VERCEL no está definido para comportamiento local estricto si fuera necesario, 
+// o simplemente confiar en NODE_ENV
 if (process.env.NODE_ENV !== 'production') {
     try {
         MongoMemoryServer = require('mongodb-memory-server').MongoMemoryServer;
@@ -73,7 +74,6 @@ const connectDB = async () => {
         // Intento 2: Probar conexión local estándar
         try {
             await mongoose.connect('mongodb://127.0.0.1:27017/password', { serverSelectionTimeoutMS: 2000 });
-            console.log('✅ Conectado a MongoDB (Local 127.0.0.1)');
             console.log('✅ Conectado a MongoDB (Local 127.0.0.1)');
         } catch (localErr) {
             console.log('⚠️ No se encontró MongoDB local.');
@@ -173,6 +173,7 @@ module.exports = app;
 if (require.main === module) {
     const server = app.listen(PORT, () => {
         const actualPort = server.address().port;
+        // Ajuste en mensaje para claridad
         console.log(`🚀 Servidor de PassWord S.A.S. corriendo en http://localhost:${actualPort}`);
         console.log(`📂 Panel de Administración: http://localhost:${actualPort}/admin.html`);
     });
@@ -195,12 +196,13 @@ app.post('/api/imagenes/subir', requireAdmin, upload.single('imagen'), async (re
             imageUrl = blob.url;
         } else {
             // 1b. Guardar Localmente (Fallback)
+            // Ajustamos path para que guarde en ../uploads
             const filename = `imagen-${Date.now()}-${Math.round(Math.random() * 1E9)}${path.extname(req.file.originalname)}`;
-            const filepath = path.join(__dirname, 'uploads', filename);
+            const filepath = path.join(__dirname, '../uploads', filename);
 
             // Asegurar que existe la carpeta
-            if (!fs.existsSync(path.join(__dirname, 'uploads'))) {
-                fs.mkdirSync(path.join(__dirname, 'uploads'));
+            if (!fs.existsSync(path.join(__dirname, '../uploads'))) {
+                fs.mkdirSync(path.join(__dirname, '../uploads'));
             }
 
             fs.writeFileSync(filepath, req.file.buffer);
@@ -208,6 +210,7 @@ app.post('/api/imagenes/subir', requireAdmin, upload.single('imagen'), async (re
             // URL Local
             const protocol = req.protocol;
             const host = req.get('host');
+            // La ruta es /uploads/... que servimos estáticamente
             imageUrl = `${protocol}://${host}/uploads/${filename}`;
             console.log('⚠️ Blob no configurado. Imagen guardada localmente en:', filepath);
         }
@@ -289,7 +292,8 @@ app.delete('/api/imagenes/:id', requireAdmin, async (req, res) => {
         if (image.url.includes('/uploads/')) {
             // Es un archivo local
             const filename = image.url.split('/uploads/')[1];
-            const filepath = path.join(__dirname, 'uploads', filename);
+            // Fix path ../uploads
+            const filepath = path.join(__dirname, '../uploads', filename);
             if (fs.existsSync(filepath)) {
                 fs.unlinkSync(filepath);
                 console.log('🗑️ Archivo local eliminado:', filepath);

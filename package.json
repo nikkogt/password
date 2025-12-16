@@ -2,9 +2,9 @@
   "name": "password-sas-web",
   "version": "1.0.0",
   "description": "Sitio web dinámico para PassWord S.A.S.",
-  "main": "server.js",
+  "main": "api/index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node api/index.js"
   },
   "keywords": [
     "express",
