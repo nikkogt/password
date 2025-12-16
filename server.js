@@ -224,7 +224,7 @@ app.post('/api/imagenes/subir', requireAdmin, upload.single('imagen'), async (re
 app.get('/api/public/images', async (req, res) => {
     try {
         const images = await Image.find();
-        return res.status(200).json(images);
+        return res.status(200).json({ images });
     } catch (error) {
         console.error('Error obteniendo imágenes públicas:', error);
         res.status(500).json({ message: 'Error al obtener imágenes.' });

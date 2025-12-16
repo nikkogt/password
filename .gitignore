@@ -1,0 +1,14 @@
+# Dependencias de Node.js
+/node_modules
+
+# Archivos de entorno y configuración
+.env
+.DS_Store
+
+# Archivos generados automáticamente por VS Code
+.vscode/
+
+# Archivos de registro y depuración (logs)
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
