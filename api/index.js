@@ -161,6 +161,42 @@ app.get('/api/health', (req, res) => {
     res.status(200).send('OK - Server is running');
 });
 
+// Ruta de PRUEBA DE CONEXIÓN A BASE DE DATOS
+app.get('/api/test-db', async (req, res) => {
+    try {
+        const state = mongoose.connection.readyState;
+        const states = { 0: 'Desconectado', 1: 'Conectado', 2: 'Conectando', 3: 'Desconectando' };
+
+        let dbInfo = {
+            state: states[state],
+            host: mongoose.connection.host,
+            name: mongoose.connection.name
+        };
+
+        // Si no está conectado, intentar conectar explícitamente para ver el error
+        if (state !== 1) {
+            try {
+                if (process.env.MONGODB_URI) {
+                    await mongoose.connect(process.env.MONGODB_URI);
+                    dbInfo.state = 'Reconectado exitosamente';
+                } else {
+                    throw new Error('MONGODB_URI no definida');
+                }
+            } catch (connErr) {
+                return res.status(500).json({
+                    message: 'Error intentando conectar',
+                    error: connErr.message,
+                    env_var_exists: !!process.env.MONGODB_URI
+                });
+            }
+        }
+
+        res.status(200).json({ status: 'OK', info: dbInfo });
+    } catch (error) {
+        res.status(500).json({ status: 'Error', error: error.message });
+    }
+});
+
 // 5. Ruta POST para manejar el Login
 app.post('/api/login', (req, res) => {
     const { username, password } = req.body;
