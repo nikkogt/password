@@ -177,7 +177,7 @@ app.get('/api/test-db', async (req, res) => {
         if (state !== 1) {
             try {
                 if (process.env.MONGODB_URI) {
-                    await mongoose.connect(process.env.MONGODB_URI);
+                    await mongoose.connect(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 5000 });
                     dbInfo.state = 'Reconectado exitosamente';
                 } else {
                     throw new Error('MONGODB_URI no definida');
