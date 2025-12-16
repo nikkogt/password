@@ -1,138 +1,138 @@
-    const loginView = document.getElementById('loginView');
-    const adminView = document.getElementById('adminView');
-    const messageElement = document.getElementById('message');
-    const uploadMessageElement = document.getElementById('uploadMessage');
-    const currentImagesList = document.getElementById('currentImagesList');
-    const categorySelect = document.getElementById('categorySelect');
-    const galleryFields = document.getElementById('galleryFields');
-    const tipsFields = document.getElementById('tipsFields');
-    const galleryTitle = document.getElementById('galleryTitle');
-    const tipsTitle = document.getElementById('tipsTitle');
-    const tipsDescription = document.getElementById('tipsDescription');
+const loginView = document.getElementById('loginView');
+const adminView = document.getElementById('adminView');
+const messageElement = document.getElementById('message');
+const uploadMessageElement = document.getElementById('uploadMessage');
+const currentImagesList = document.getElementById('currentImagesList');
+const categorySelect = document.getElementById('categorySelect');
+const galleryFields = document.getElementById('galleryFields');
+const tipsFields = document.getElementById('tipsFields');
+const galleryTitle = document.getElementById('galleryTitle');
+const tipsTitle = document.getElementById('tipsTitle');
+const tipsDescription = document.getElementById('tipsDescription');
 
-    // --- Funciones de Interfaz ---
+// --- Funciones de Interfaz ---
 
-    // Muestra u oculta las vistas
-    function toggleViews(isLoggedIn) {
-        loginView.style.display = isLoggedIn ? 'none' : 'block';
-        adminView.style.display = isLoggedIn ? 'block' : 'none';
-        document.body.style.display = isLoggedIn ? 'block' : 'flex';
-        document.body.style.justifyContent = isLoggedIn ? '' : 'center';
-        document.body.style.alignItems = isLoggedIn ? '' : 'center';
-        document.body.style.height = isLoggedIn ? '' : '100vh';
-        if (isLoggedIn) {
-            fetchImages(1); // Cargar la lista de imágenes al iniciar sesión
-        }
+// Muestra u oculta las vistas
+function toggleViews(isLoggedIn) {
+    loginView.style.display = isLoggedIn ? 'none' : 'block';
+    adminView.style.display = isLoggedIn ? 'block' : 'none';
+    document.body.style.display = isLoggedIn ? 'block' : 'flex';
+    document.body.style.justifyContent = isLoggedIn ? '' : 'center';
+    document.body.style.alignItems = isLoggedIn ? '' : 'center';
+    document.body.style.height = isLoggedIn ? '' : '100vh';
+    if (isLoggedIn) {
+        fetchImages(1); // Cargar la lista de imágenes al iniciar sesión
     }
+}
 
-    // Verificar si ya está logueado al cargar la página
-    async function checkLogin() {
-        try {
-            const response = await fetch('/api/check-login', { credentials: 'include' });
-            if (response.ok) {
-                const data = await response.json();
-                if (data.loggedIn) {
-                    toggleViews(true);
-                    return;
-                }
-            }
-        } catch (error) {
-            console.error('Error verificando login:', error);
-        }
-        toggleViews(false);
-    }
-
-    // --- Manejo del Login ---
-    document.getElementById('loginForm').addEventListener('submit', async function(event) {
-        event.preventDefault();
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-        messageElement.textContent = 'Intentando iniciar sesión...';
-
-        try {
-            const response = await fetch('/api/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify({ username, password })
-            });
-
-            if (response.ok) {
-                messageElement.textContent = 'Login exitoso. Redirigiendo...';
+// Verificar si ya está logueado al cargar la página
+async function checkLogin() {
+    try {
+        const response = await fetch('/api/check-login', { credentials: 'include' });
+        if (response.ok) {
+            const data = await response.json();
+            if (data.loggedIn) {
                 toggleViews(true);
-            } else {
-                const data = await response.json();
-                messageElement.textContent = data.message || 'Error de autenticación.';
+                return;
             }
-        } catch (error) {
-            messageElement.textContent = 'Error de conexión con el servidor.';
+        }
+    } catch (error) {
+        console.error('Error verificando login:', error);
+    }
+    toggleViews(false);
+}
+
+// --- Manejo del Login ---
+document.getElementById('loginForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    messageElement.textContent = 'Intentando iniciar sesión...';
+
+    try {
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ username, password })
+        });
+
+        if (response.ok) {
+            messageElement.textContent = 'Login exitoso. Redirigiendo...';
+            toggleViews(true);
+        } else {
+            const data = await response.json();
+            messageElement.textContent = data.message || 'Error de autenticación.';
+        }
+    } catch (error) {
+        messageElement.textContent = 'Error de conexión con el servidor.';
+    }
+});
+
+// --- Carga de Imágenes ---
+// Toggle fields when category changes
+if (categorySelect) {
+    categorySelect.addEventListener('change', () => {
+        const val = categorySelect.value;
+        if (val === 'gallery') {
+            galleryFields.style.display = 'block';
+            tipsFields.style.display = 'none';
+            // enable/disable inputs to ensure FormData contains only relevant fields
+            galleryTitle.disabled = false;
+            tipsTitle.disabled = true;
+            tipsDescription.disabled = true;
+        } else {
+            galleryFields.style.display = 'none';
+            tipsFields.style.display = 'block';
+            galleryTitle.disabled = true;
+            tipsTitle.disabled = false;
+            tipsDescription.disabled = false;
         }
     });
+    // initialize proper state
+    categorySelect.dispatchEvent(new Event('change'));
+}
 
-    // --- Carga de Imágenes ---
-    // Toggle fields when category changes
-    if (categorySelect) {
-        categorySelect.addEventListener('change', () => {
-            const val = categorySelect.value;
-            if (val === 'gallery') {
-                galleryFields.style.display = 'block';
-                tipsFields.style.display = 'none';
-                // enable/disable inputs to ensure FormData contains only relevant fields
-                galleryTitle.disabled = false;
-                tipsTitle.disabled = true;
-                tipsDescription.disabled = true;
-            } else {
-                galleryFields.style.display = 'none';
-                tipsFields.style.display = 'block';
-                galleryTitle.disabled = true;
-                tipsTitle.disabled = false;
-                tipsDescription.disabled = false;
-            }
+document.getElementById('imageUploadForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    // FormData se usa para enviar archivos (multipart/form-data)
+    const formData = new FormData(this);
+    uploadMessageElement.textContent = 'Subiendo archivo...';
+    uploadMessageElement.style.color = 'var(--color-accent)';
+
+    try {
+        const response = await fetch('/api/imagenes/subir', {
+            method: 'POST',
+            credentials: 'include',
+            // ¡IMPORTANTE! No establecemos 'Content-Type' aquí. 
+            // El navegador lo hace automáticamente para FormData.
+            body: formData
         });
-        // initialize proper state
-        categorySelect.dispatchEvent(new Event('change'));
-    }
 
-    document.getElementById('imageUploadForm').addEventListener('submit', async function(event) {
-        event.preventDefault();
+        const data = await response.json();
 
-        // FormData se usa para enviar archivos (multipart/form-data)
-        const formData = new FormData(this);
-        uploadMessageElement.textContent = 'Subiendo archivo...';
-        uploadMessageElement.style.color = 'var(--color-accent)';
-
-        try {
-            const response = await fetch('/api/imagenes/subir', {
-                method: 'POST',
-                credentials: 'include',
-                // ¡IMPORTANTE! No establecemos 'Content-Type' aquí. 
-                // El navegador lo hace automáticamente para FormData.
-                body: formData 
-            });
-
-            const data = await response.json();
-            
-            if (response.ok) {
-                uploadMessageElement.textContent = data.message;
-                uploadMessageElement.style.color = 'lightgreen';
-                document.getElementById('imageFile').value = ''; // Limpiar el campo
-                fetchImages(1); // Recargar la lista después de la subida, ir a primera página
-            } else {
-                uploadMessageElement.textContent = data.message || 'Error al subir la imagen.';
-                uploadMessageElement.style.color = 'red';
-            }
-        } catch (error) {
-            uploadMessageElement.textContent = 'Error de conexión durante la subida.';
+        if (response.ok) {
+            uploadMessageElement.textContent = data.message;
+            uploadMessageElement.style.color = 'lightgreen';
+            document.getElementById('imageFile').value = ''; // Limpiar el campo
+            fetchImages(1); // Recargar la lista después de la subida, ir a primera página
+        } else {
+            uploadMessageElement.textContent = data.message || 'Error al subir la imagen.';
             uploadMessageElement.style.color = 'red';
         }
-    });
+    } catch (error) {
+        uploadMessageElement.textContent = 'Error de conexión durante la subida.';
+        uploadMessageElement.style.color = 'red';
+    }
+});
 
-    // --- Cargar Lista de Imágenes (Faltan las rutas GET y DELETE en el Back-end) ---
-    // Esta función se completará en el siguiente paso, por ahora solo muestra un mensaje
-    let currentPage = 1;
-    const imagesPerPage = 20;
+// --- Cargar Lista de Imágenes (Faltan las rutas GET y DELETE en el Back-end) ---
+// Esta función se completará en el siguiente paso, por ahora solo muestra un mensaje
+let currentPage = 1;
+const imagesPerPage = 20;
 
-    async function fetchImages(page = 1) {
+async function fetchImages(page = 1) {
     currentPage = page;
     currentImagesList.innerHTML = '<li>Cargando lista de imágenes...</li>';
 
@@ -143,7 +143,7 @@
         const pagination = data.pagination;
 
         currentImagesList.innerHTML = ''; // Limpiar la lista
-        
+
         if (images.length === 0) {
             currentImagesList.innerHTML = '<li style="color: var(--color-accent);">No hay imágenes subidas aún.</li>';
             return;
@@ -215,14 +215,15 @@
 
     } catch (error) {
         console.error('Error al obtener la lista de imágenes:', error);
-        currentImagesList.innerHTML = '<li style="color: red;">Error al cargar las imágenes. ¿Sesión expirada o servidor caído?</li>';
-        // Si hay error, intentar reautenticar o mostrar la vista de login.
-        toggleViews(false); 
+        currentImagesList.innerHTML = '<li style="color: red;">Error al cargar imágenes. Verifique la conexión a la Base de Datos.</li>';
+        // Solo cerrar sesión si el error es explícitamente de autenticación (lo cual sabríamos si checkeramos status antes)
+        // Por falta de chequeo detallado aquí, evitaremos toggleViews(false) para no cerrar el panel
+        // toggleViews(false); 
     }
 }
 
-    // --- Inicialización (Verificar si ya estamos logueados, aunque sin DB es difícil) ---
-    async function deleteImage(id) {
+// --- Inicialización (Verificar si ya estamos logueados, aunque sin DB es difícil) ---
+async function deleteImage(id) {
     if (!confirm('¿Estás seguro de que quieres eliminar esta imagen?')) {
         return;
     }
