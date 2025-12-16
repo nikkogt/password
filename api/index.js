@@ -12,6 +12,8 @@ const app = express();
 const PORT = process.env.PORT || 0;
 
 // --- CONFIGURACIÓN DEL SERVIDOR ---
+// Necesario para que las cookies seguras funcionen detrás del proxy de Vercel
+app.set('trust proxy', 1);
 
 // 3. Servir archivos estáticos: HTML, CSS, JS e imágenes
 // Ajuste de rutas para Vercel: salir de 'api' para buscar 'public'
