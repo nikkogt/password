@@ -74,33 +74,33 @@ const connectDB = async () => {
                 console.warn('⚠️ ADVERTENCIA: MONGODB_URI no está definido o es inválido en entorno de producción.');
             }
         }
-    }
+
 
         // Intento 2: Probar conexión local estándar
         try {
-        await mongoose.connect('mongodb://127.0.0.1:27017/password', { serverSelectionTimeoutMS: 2000 });
-        console.log('✅ Conectado a MongoDB (Local 127.0.0.1)');
-    } catch (localErr) {
-        console.log('⚠️ No se encontró MongoDB local.');
+            await mongoose.connect('mongodb://127.0.0.1:27017/password', { serverSelectionTimeoutMS: 2000 });
+            console.log('✅ Conectado a MongoDB (Local 127.0.0.1)');
+        } catch (localErr) {
+            console.log('⚠️ No se encontró MongoDB local.');
 
-        // Fallback: In-Memory Database (SOLO si no estamos en producción)
-        if (process.env.NODE_ENV !== 'production' && MongoMemoryServer) {
-            console.log('Iniciando base de datos en memoria...');
-            const mongod = await MongoMemoryServer.create();
-            const uri = mongod.getUri();
-            await mongoose.connect(uri);
-            console.log('✅ Conectado a MongoDB en Memoria (Datos temporales)');
-            console.log('ℹ️  Nota: Los datos se borrarán al detener el servidor.');
-        } else {
-            console.error('❌ Error CRÍTICO: No se pudo conectar a ninguna base de datos.');
-            console.error('   -> En Producción (Vercel), asegúrate de tener la variable MONGODB_URI configurada.');
-            console.error('   -> En Local, asegúrate de que MongoDB esté corriendo.');
+            // Fallback: In-Memory Database (SOLO si no estamos en producción)
+            if (process.env.NODE_ENV !== 'production' && MongoMemoryServer) {
+                console.log('Iniciando base de datos en memoria...');
+                const mongod = await MongoMemoryServer.create();
+                const uri = mongod.getUri();
+                await mongoose.connect(uri);
+                console.log('✅ Conectado a MongoDB en Memoria (Datos temporales)');
+                console.log('ℹ️  Nota: Los datos se borrarán al detener el servidor.');
+            } else {
+                console.error('❌ Error CRÍTICO: No se pudo conectar a ninguna base de datos.');
+                console.error('   -> En Producción (Vercel), asegúrate de tener la variable MONGODB_URI configurada.');
+                console.error('   -> En Local, asegúrate de que MongoDB esté corriendo.');
+            }
         }
-    }
 
-} catch (err) {
-    console.error('❌ Error fatal conectando a base de datos:', err.message);
-}
+    } catch (err) {
+        console.error('❌ Error fatal conectando a base de datos:', err.message);
+    }
 };
 
 connectDB();
