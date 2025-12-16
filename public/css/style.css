@@ -1,0 +1,740 @@
+/* Paleta de Colores y Variables (Identidad Visual PassWord S.A.S.) */
+:root {
+    --color-primary: #FF5722; /* Naranja Fuerte (Marca / CTAs) */
+    --color-accent: #00E0FFA; /* Azul Eléctrico (Tecnología / Resaltado) */
+    --color-background-dark: #1A1A1A; /* Negro Profundo (Fondo principal) */
+    --color-light: #F5F5F5; /* Gris Muy Claro (Fondo de secciones legibles) */
+    --color-text-light: #E0E0E0; /* Texto claro para fondos oscuros */
+    --color-text-dark: #1A1A1A; /* Texto oscuro para fondos claros */
+    --font-family-sans: 'Arial', sans-serif;
+}
+
+/* Reinicio Básico (Reset) */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--color-background-dark);
+    color: var(--color-text-light);
+    font-family: var(--font-family-sans);
+    line-height: 1.6;
+}
+
+a {
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--color-primary);
+}
+
+h1, h2, h3 {
+    color: var(--color-primary); /* Los títulos usan el color principal */
+    margin-bottom: 0.5em;
+    font-weight: 700;
+}
+
+section {
+    padding: 60px 5%;
+    min-height: 400px;
+}
+
+/* Estilo para Secciones Claras (Para romper el esquema oscuro y mejorar la legibilidad) */
+.light-section {
+    background-color: var(--color-light);
+    color: var(--color-text-dark);
+}
+
+.light-section h2, .light-section h3 {
+    color: var(--color-background-dark); /* Títulos oscuros en fondo claro */
+}
+
+/* Botón de Llamada a la Acción (CTA) */
+.cta-button {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: var(--color-primary);
+    color: var(--color-background-dark); /* Texto oscuro en botón naranja */
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cta-button:hover {
+    background-color: #E64A19; /* Tono más oscuro de naranja */
+    color: var(--color-text-light);
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   II. Estilos Base y Paleta de Colores
+   ========================================= */
+
+:root {
+    --color-primary: #FF5722; /* Naranja Fuerte (Marca / CTAs) */
+    --color-accent: #00E0FFA; /* Azul Eléctrico (Tecnología / Resaltado) */
+    --color-background-dark: #1A1A1A; /* Negro Profundo (Fondo principal) */
+    --color-light: #F5F5F5; /* Gris Muy Claro (Fondo de secciones legibles) */
+    --color-text-light: #E0E0E0; /* Texto claro para fondos oscuros */
+    --color-text-dark: #1A1A1A; /* Texto oscuro para fondos claros */
+    --font-family-sans: 'Montserrat', sans-serif; /* Se recomienda usar una fuente como Montserrat */
+}
+
+/* Reset y Tipografía */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--color-background-dark);
+    color: var(--color-text-light);
+    font-family: var(--font-family-sans);
+    line-height: 1.6;
+    scroll-behavior: smooth;
+}
+
+a {
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--color-primary);
+}
+
+section {
+    padding: 80px 5%;
+    min-height: auto;
+}
+
+.section-title {
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: var(--color-text-dark);
+    margin-bottom: 40px;
+    font-size: 1.1em;
+}
+
+/* Botón CTA Base */
+.cta-button {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: var(--color-primary);
+    color: var(--color-background-dark);
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cta-button:hover {
+    background-color: #E64A19; 
+    color: var(--color-text-light);
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   III. Header y Navegación
+   ========================================= */
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background-color: var(--color-background-dark);
+    border-bottom: 1px solid #282828;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo-img {
+    height: 80px; /* Ajusta la altura para que se vea bien en el header */
+    width: auto;
+    display: block; /* Asegura que la imagen se comporta bien */
+}
+
+.main-header nav a {
+    margin-left: 20px;
+    font-weight: 500;
+}
+
+.contact-info {
+    color: var(--color-accent);
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+.nav-cta {
+    margin-left: 30px;
+}
+
+/* =========================================
+   IV. Hero Section
+   ========================================= */
+
+.hero-section {
+    background: linear-gradient(rgba(26, 26, 26, 0.85), rgba(26, 26, 26, 0.95)), 
+                url('/uploads/hero-main.webp') center center no-repeat;
+    background-size: cover;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-size: 4em;
+    margin-bottom: 0.2em;
+    color: var(--color-text-light);
+    text-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+    font-weight: 900;
+}
+
+.hero-content h1 span {
+    color: var(--color-accent);
+}
+
+.hero-content p {
+    font-size: 1.4em;
+    margin-bottom: 40px;
+    color: var(--color-text-light);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* =========================================
+   V. Secciones Claras (Servicios/Tips)
+   ========================================= */
+
+.light-section {
+    background-color: var(--color-light);
+    color: var(--color-text-dark);
+}
+
+.light-section h2, .light-section h3 {
+    color: var(--color-background-dark);
+}
+
+/* =========================================
+   VI. Acordeón de Servicios
+   ========================================= */
+
+.accordion-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.accordion-item {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: var(--color-light); /* Fondo claro de la sección */
+}
+
+.accordion-header {
+    width: 100%;
+    padding: 15px 20px;
+    background-color: var(--color-background-dark); /* Color oscuro para el encabezado */
+    color: var(--color-text-light);
+    text-align: left;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+    position: relative;
+}
+
+.accordion-header:hover {
+    background-color: #282828;
+}
+
+.accordion-header::after {
+    content: '+';
+    font-size: 1.5em;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s;
+    color: var(--color-primary);
+}
+
+.accordion-header[aria-expanded="true"]::after {
+    content: '−';
+    transform: translateY(-50%) rotate(45deg); /* Animación de rotación al abrir */
+    color: var(--color-accent);
+}
+
+.accordion-content {
+    background-color: var(--color-light);
+    color: var(--color-text-dark);
+    padding: 0 20px;
+    max-height: 0; /* Clave para el efecto de colapso animado */
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+}
+
+.accordion-content p {
+    padding: 15px 0;
+    margin: 0;
+    border-top: 1px solid #ddd;
+}
+
+/* Estilo cuando está abierto (manejado por JS) */
+.accordion-content.open {
+    max-height: 500px; /* Un valor grande suficiente para cualquier contenido */
+    padding: 0 20px 20px 20px;
+}
+
+/* =========================================
+   VII. Galería de Proyectos
+   ========================================= */
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 224, 255, 0.8); /* Azul eléctrico semitransparente */
+    color: var(--color-background-dark);
+    padding: 15px;
+    font-weight: bold;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-out;
+}
+
+.gallery-item:hover .overlay {
+    transform: translateY(0);
+}
+
+/* =========================================
+   VIII. Carrusel de Tips
+   ========================================= */
+
+.tip-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.tip-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.tip-text {
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.80);
+    z-index: 2;
+}
+
+.tip-content h3 {
+    color: white;
+    padding: 10px 10px 5px 10px;
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.tip-content p {
+    color: rgb(255, 255, 255);
+    padding: 5px 10px 10px 10px;
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.carousel-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--color-light);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 0 0px;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform .5s ease-in-out; /* Instant transition to prevent peeking */
+}
+
+.carousel-slide {
+    flex-shrink: 0; /* Evita que las diapositivas se encojan */
+    width: 100%;
+    position: relative; /* Para posicionar la imagen absolutamente */
+    min-height: 500px; /* Altura mínima */
+    overflow: hidden; /* Asegura que la imagen no se salga */
+}
+
+.carousel-slide h3 {
+    color: var(--color-primary);
+    margin-bottom: 10px;
+    font-size: 1.8em;
+}
+
+.carousel-slide p {
+    color: var(--color-text-light);
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    cursor: pointer;
+    z-index: 20;
+    transition: background-color 0.3s;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-button:hover {
+    background-color: rgba(0, 224, 255, 0.8); /* Azul eléctrico en hover */
+}
+
+.prev-button {
+    left: 10px;
+    border-radius: 0 5px 5px 0;
+}
+
+.next-button {
+    right: 10px;
+    border-radius: 5px 0 0 5px;
+}
+
+.carousel-dots {
+    text-align: center;
+    padding: 15px 0;
+    background-color: var(--color-light);
+}
+
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    background-color: #aaa;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.dot.active {
+    background-color: var(--color-primary);
+    transform: scale(1.2);
+}
+
+/* =========================================
+   IX. Contacto y Footer
+   ========================================= */
+
+.contact-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.contact-info-grid h3 {
+    color: var(--color-accent);
+}
+
+/* =========================================
+   Admin Panel Styles
+   ========================================= */
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 5%;
+    background: linear-gradient(90deg, rgba(26,26,26,0.95), rgba(34,34,34,0.95));
+    border-bottom: 1px solid #222;
+}
+
+.admin-title {
+    color: var(--color-accent);
+    font-size: 1.4em;
+    margin: 0;
+}
+
+.card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.04);
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+}
+
+.admin-main {
+    max-width: 1000px;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 0 5%;
+}
+
+.upload-form .form-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.input-text, .input-select, .input-file {
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.02);
+    color: var(--color-text-light);
+    outline: none;
+}
+
+.input-text:focus, .input-select:focus {
+    box-shadow: 0 0 0 3px rgba(255,87,34,0.08);
+    border-color: var(--color-primary);
+}
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.btn.primary {
+    background: var(--color-primary);
+    color: var(--color-background-dark);
+}
+
+.btn.secondary {
+    background: transparent;
+    color: var(--color-text-light);
+    border: 1px solid rgba(255,255,255,0.06);
+}
+
+.muted-message {
+    color: #bbb;
+    font-size: 0.9em;
+}
+
+.images-list {
+    list-style: none;
+    padding: 0;
+}
+
+.images-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 6px;
+    background: rgba(0,0,0,0.06);
+    margin-bottom: 8px;
+}
+
+.images-list img {
+    border-radius: 4px;
+    margin-right: 12px;
+}
+
+@media (max-width: 900px) {
+    .admin-main { grid-template-columns: 1fr; }
+}
+
+.contact-form input, .contact-form textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #333;
+    background-color: #252525;
+    color: var(--color-text-light);
+    border-radius: 4px;
+}
+
+.contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.main-footer {
+    text-align: center;
+    padding: 30px 5%;
+    background-color: var(--color-background-dark);
+    border-top: 1px solid #282828;
+    color: #888;
+    font-size: 0.9em;
+}
+
+/* =========================================
+   X. Preloader
+   ========================================= */
+
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-background-dark);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.5s ease-out; /* Animación de desvanecimiento suave */
+}
+
+.loader-spinner {
+    border: 6px solid #333;
+    border-top: 6px solid var(--color-primary); /* Color primario en el borde superior */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Estilo para ocultar el preloader */
+#preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* =========================================
+   XI. Responsividad Básica
+   ========================================= */
+
+@media (max-width: 900px) {
+    .main-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .main-header nav {
+        margin-top: 15px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .main-header nav a, .contact-info {
+        margin: 5px 10px;
+    }
+
+    .hero-content h1 {
+        font-size: 3em;
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr; /* Una columna en móviles */
+    }
+}
+
+/* Estilos para la sección de ubicación */
+#ubicacion {
+    padding: 60px 5%;
+    background-color: var(--color-background-dark);
+    color: var(--color-text-light);
+    text-align: center;
+}
+
+#ubicacion .section-title {
+    color: var(--color-accent);
+    margin-bottom: 10px;
+}
+
+#ubicacion .section-subtitle {
+    margin-bottom: 20px;
+    font-size: 1.1em;
+}
+
+#ubicacion .cta-button {
+    display: inline-block;
+    margin-top: 20px;
+}

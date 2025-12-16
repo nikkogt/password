@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PassWord S.A.S. - Expertos en Soluciones de Seguridad</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+    <div id="preloader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <header class="main-header">
+        <a href="#hero-section">
+            <img src="/img/logo/logo-horizontal.png" alt="Logo de PassWord S.A.S." class="logo-img">
+        </a>
+        <nav>
+            <a href="#servicios">Servicios</a>
+            <a href="#galeria">Galería</a>
+            <a href="#tips">Tips de Seguridad</a>
+            <a href="#contacto">Contacto</a>
+        </nav>
+        <span class="contact-info">Llama Ahora: (57) 300 123 4567</span>
+    </header>
+
+    <section id="hero-section" class="hero-section">
+        <div class="hero-content">
+            <h1>Blindando tu <span>Tranquilidad</span></h1>
+            <p>Sistemas de seguridad a la medida, cerraduras de alta tecnología y puertas blindadas certificadas en Colombia.</p>
+            <a href="#contacto" class="cta-button">Solicitar Cotización</a>
+        </div>
+    </section>
+
+    <section id="servicios" class="light-section">
+        <h2 class="section-title">Nuestros Servicios Clave</h2>
+        <p class="section-subtitle">Innovación y confiabilidad en cada solución de seguridad que ofrecemos.</p>
+        
+        <div class="accordion-container" id="servicesAccordion">
+            <div class="accordion-item">
+                <button class="accordion-header" aria-expanded="false" aria-controls="content1" id="header1">
+                    Puertas y Cerraduras de Alta Seguridad
+                </button>
+                <div class="accordion-content" id="content1" role="region" aria-labelledby="header1">
+                    <p>Diseñamos, fabricamos e instalamos puertas blindadas, acorazadas y cerraduras de seguridad multipunto con tecnología de punta para la máxima protección de hogares y empresas.</p>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <button class="accordion-header" aria-expanded="false" aria-controls="content2" id="header2">
+                    Cajas Fuertes y Bóvedas
+                </button>
+                <div class="accordion-content" id="content2" role="region" aria-labelledby="header2">
+                    <p>Instalación de cajas fuertes bancarias y domiciliarias, con certificaciones internacionales y mecanismos de retardo y apertura electrónica.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" aria-expanded="false" aria-controls="content3" id="header3">
+                    Sistemas de Control de Acceso y Alarmas
+                </button>
+                <div class="accordion-content" id="content3" role="region" aria-labelledby="header3">
+                    <p>Integración de sistemas de videovigilancia IP, alarmas inteligentes y control de acceso biométrico para gestión de tráfico y monitorización 24/7.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="galeria">
+        <h2 class="section-title">Proyectos Recientes</h2>
+        <p class="section-subtitle">Una muestra de nuestro trabajo de blindaje y protección en diferentes sectores.</p>
+        
+        <div class="gallery-grid" id="galleryGrid">
+            </div>
+    </section>
+
+    <section id="tips" class="light-section">
+        <h2 class="section-title">Tips de Seguridad Esenciales</h2>
+        <p class="section-subtitle">Consejos prácticos de nuestros expertos para aumentar la seguridad de tu propiedad.</p>
+
+        <div class="carousel-container">
+            <div class="carousel-track" id="carouselTrack">
+                </div>
+            
+            <button class="carousel-button prev-button" aria-label="Anterior">&#10094;</button>
+            <button class="carousel-button next-button" aria-label="Siguiente">&#10095;</button>
+        </div>
+        
+        <div class="carousel-dots" id="carouselDots"></div>
+    </section>
+
+    <section id="ubicacion">
+        <h2 class="section-title">Encuéntranos en Bogotá</h2>
+        <p class="section-subtitle" style="color: var(--color-text-light);">Visita nuestro showroom o contacta un asesor.</p>
+        
+        <div class="contact-info-grid">
+            <div>
+                <h3>Dirección</h3>
+                <p>Carrera 12 # 78 - 50, Bogotá D.C.</p>
+                <p>Lunes a Viernes: 8:00 AM - 5:00 PM</p>
+            </div>
+            <div>
+                <h3>Teléfonos</h3>
+                <p>Ventas: (57) 300 123 4567</p>
+                <p>Soporte 24/7: (57) 601 789 0000</p>
+            </div>
+            <div>
+                <h3>Correo Electrónico</h3>
+                <p><a href="mailto:info@passwordseguridad.com">info@passwordseguridad.com</a></p>
+                <p><a href="mailto:ventas@passwordseguridad.com">ventas@passwordseguridad.com</a></p>
+            </div>
+        </div>
+
+        <a href="https://maps.app.goo.gl/EjemploMapas" target="_blank" class="cta-button">Ver en Google Maps</a>
+    </section>
+
+    <section id="contacto" class="light-section">
+        <h2 class="section-title">Déjanos un Mensaje</h2>
+        <p class="section-subtitle">Te responderemos con una cotización personalizada en menos de 24 horas.</p>
+
+        <form class="contact-form" id="contactForm">
+            <input type="text" id="contactName" placeholder="Tu Nombre" required>
+            <input type="email" id="contactEmail" placeholder="Tu Correo Electrónico" required>
+            <input type="text" id="contactPhone" placeholder="Teléfono" required>
+            <textarea id="contactMessage" placeholder="Tu Mensaje o Requerimiento" required></textarea>
+            <button type="submit" class="cta-button">Enviar Solicitud</button>
+            <p id="contactMessageStatus" style="margin-top: 15px; text-align: center; font-weight: bold;"></p>
+        </form>
+    </section>
+
+    <footer class="main-footer">
+        <p>&copy; 2025 PassWord S.A.S. | Todos los derechos reservados. | <a href="admin.html">Panel Admin</a></p>
+    </footer>
+
+    <script src="js/scripts.js"></script>
+</body>
+</html>
