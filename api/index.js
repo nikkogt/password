@@ -89,7 +89,7 @@ const connectDB = async () => {
     try {
         // Intento 1: Conexión directa a la URI configurada (si existe y no es la default fallida)
         if (mongoURI && !mongoURI.includes('localhost')) {
-            await mongoose.connect(mongoURI);
+            await mongoose.connect(mongoURI, { serverSelectionTimeoutMS: 5000 });
             console.log('✅ Conectado a MongoDB (Remoto/Configurado)');
             return;
         } else {
