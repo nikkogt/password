@@ -58,13 +58,14 @@ async function loadMedia() {
     try {
         // Asumiendo que esta API devuelve todas las imágenes (Galería y Tips)
         // Force random to avoid ANY browser cache
-        const response = await fetch(`/api/public/images?nocache=${Math.random()}`);
+        const response = await fetch(`/api/debug-db?nocache=${Math.random()}`);
 
         if (!response.ok) {
             throw new Error(`Error HTTP: ${response.status}`);
         }
 
         const data = await response.json();
+        // Debug route structure returns images array directly in 'images' key, consistent with public route
         const images = data.images || [];
 
         // Limpiar contenedores antes de llenar

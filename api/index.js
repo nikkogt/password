@@ -141,6 +141,7 @@ app.post('/api/logout', (req, res) => {
 
 // Public Images
 app.get('/api/public/images', async (req, res) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     const images = await BlobDB.getImages();
     res.json({ images });
 });
