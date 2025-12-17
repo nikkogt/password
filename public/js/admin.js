@@ -137,7 +137,7 @@ async function fetchImages(page = 1) {
     currentImagesList.innerHTML = '<li>Cargando lista de imágenes...</li>';
 
     try {
-        const response = await fetch(`/api/imagenes?page=${page}&limit=${imagesPerPage}`, { credentials: 'include' });
+        const response = await fetch(`/api/imagenes?page=${page}&limit=${imagesPerPage}&t=${Date.now()}`, { credentials: 'include' });
         const data = await response.json();
         const images = data.images;
         const pagination = data.pagination;

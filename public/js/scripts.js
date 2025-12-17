@@ -53,7 +53,7 @@ function setupAccordion() {
 async function loadMedia() {
     try {
         // Asumiendo que esta API devuelve todas las imágenes (Galería y Tips)
-        const response = await fetch('/api/public/images');
+        const response = await fetch(`/api/public/images?t=${Date.now()}`);
 
         if (!response.ok) {
             throw new Error(`Error HTTP: ${response.status}`);
@@ -245,12 +245,12 @@ contactForm.addEventListener('submit', async function (event) {
 
 
 // --- Inicialización al cargar la ventana ---
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
     // 1. Configurar el acordeón
     setupAccordion();
 
     // 2. Cargar media dinámica (inicia el carrusel internamente)
-    loadMedia();
+    await loadMedia();
 
     // 3. Ocultar el preloader después de todo
     hidePreloader();
