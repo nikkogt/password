@@ -36,7 +36,8 @@ class BlobDB {
             const url = await this.getDbUrl();
             if (!url) return [];
             // FORCE NO-CACHE: Vercel Blob updates can be slow to propagate if cached
-            const response = await fetch(url, { cache: 'no-store' });
+            // Appending query param effectively bypasses Vercel Edge Cache for this internal read
+            const response = await fetch(`${url}?timestamp=${Date.now()}`, { cache: 'no-store' });
             if (!response.ok) return [];
             return await response.json();
         } catch (e) {
