@@ -196,9 +196,10 @@ app.post('/api/imagenes/subir', requireAdmin, upload.single('imagen'), async (re
         };
 
         const saved = await BlobDB.addImage(newImage);
-        res.status(201).json({ success: true, image: saved });
-    } catch (e) {
-        console.error(e);
+        return res.status(200).json({
+            success: true,
+            message: 'Imagen eliminada exitosamente.'
+        }); console.error(e);
         res.status(500).json({ success: false, message: e.message });
     }
 });
