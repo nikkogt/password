@@ -41,7 +41,7 @@ class BlobDB {
         try {
             const url = await this.getDbUrl();
             if (!url) return []; // No DB exists yet
-            const response = await fetch(url);
+            const response = await fetch(url, { cache: 'no-store' }); // FORCE FRESH DATA
             if (!response.ok) return [];
             return await response.json();
         } catch (e) {

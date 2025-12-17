@@ -101,6 +101,31 @@ document.getElementById('imageUploadForm').addEventListener('submit', async func
     uploadMessageElement.textContent = 'Subiendo archivo...';
     uploadMessageElement.style.color = 'var(--color-accent)';
 
+    // Optimistic UI: Show progress
+    const fileInput = document.getElementById('imageFile');
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        const fakeItem = document.createElement('li');
+        fakeItem.style.opacity = '0.7';
+        fakeItem.innerHTML = `
+            <div style="display: flex; align-items: center;">
+                <div style="width: 50px; height: 50px; margin-right: 15px; border: 1px solid var(--color-accent); display: flex; align-items: center; justify-content: center;">
+                    <span style="font-size: 20px;">⏳</span>
+                </div>
+                <div>
+                    <div style="font-size:0.85em">${file.name} (Subiendo...)</div>
+                    <div style="font-size:0.75em; color:#bbb">Por favor espere</div>
+                </div>
+            </div>
+        `;
+        // Insert at top
+        if (currentImagesList.firstChild) {
+            currentImagesList.insertBefore(fakeItem, currentImagesList.firstChild);
+        } else {
+            currentImagesList.appendChild(fakeItem);
+        }
+    }
+
     try {
         const response = await fetch('/api/imagenes/subir', {
             method: 'POST',
@@ -116,7 +141,8 @@ document.getElementById('imageUploadForm').addEventListener('submit', async func
             uploadMessageElement.textContent = data.message;
             uploadMessageElement.style.color = 'lightgreen';
             document.getElementById('imageFile').value = ''; // Limpiar el campo
-            fetchImages(1); // Recargar la lista después de la subida, ir a primera página
+            // Aggressive re-fetch with cache busting
+            fetchImages(1);
         } else {
             uploadMessageElement.textContent = data.message || 'Error al subir la imagen.';
             uploadMessageElement.style.color = 'red';
@@ -209,7 +235,7 @@ async function fetchImages(page = 1) {
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', (e) => {
                 const id = e.target.getAttribute('data-id');
-                deleteImage(id);
+                deleteImage(id, e.target);
             });
         });
 
@@ -223,9 +249,16 @@ async function fetchImages(page = 1) {
 }
 
 // --- Inicialización (Verificar si ya estamos logueados, aunque sin DB es difícil) ---
-async function deleteImage(id) {
+async function deleteImage(id, btnElement) {
     if (!confirm('¿Estás seguro de que quieres eliminar esta imagen?')) {
         return;
+    }
+
+    // Optimistic UI: Remove immediately
+    const li = btnElement.closest('li');
+    if (li) {
+        li.style.opacity = '0.5'; // Visual feedback
+        li.style.pointerEvents = 'none';
     }
 
     try {
@@ -237,14 +270,26 @@ async function deleteImage(id) {
         const data = await response.json();
 
         if (response.ok) {
-            alert(data.message);
-            fetchImages(currentPage); // Recargar lista en la página actual
+            // Success: Remove completely
+            if (li) li.remove();
+
+            // Re-fetch to keep pagination in sync, but silently
+            fetchImages(currentPage);
         } else {
             alert(data.message || 'Error al eliminar la imagen.');
+            // Revert changes if failed
+            if (li) {
+                li.style.opacity = '1';
+                li.style.pointerEvents = 'all';
+            }
         }
     } catch (error) {
         console.error('Error de red al eliminar:', error);
         alert('Error de conexión con el servidor al intentar eliminar.');
+        if (li) {
+            li.style.opacity = '1';
+            li.style.pointerEvents = 'all';
+        }
     }
 }
 
