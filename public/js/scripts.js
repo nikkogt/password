@@ -58,7 +58,7 @@ async function loadMedia() {
     try {
         // Asumiendo que esta API devuelve todas las imágenes (Galería y Tips)
         // Force random to avoid ANY browser cache
-        const response = await fetch(`/api/debug-db?nocache=${Math.random()}`);
+        const response = await fetch(`/api/public/images?nocache=${Math.random()}`);
 
         if (!response.ok) {
             throw new Error(`Error HTTP: ${response.status}`);

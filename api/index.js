@@ -210,23 +210,6 @@ app.post('/api/imagenes/subir', requireAdmin, upload.single('imagen'), async (re
     }
 });
 
-// Debug route
-app.get('/api/debug-db', async (req, res) => {
-    try {
-        const { blobs } = await list();
-        const dbUrl = await BlobDB.getDbUrl();
-        const images = await BlobDB.getImages();
-        res.json({
-            blobs: blobs.map(b => ({ pathname: b.pathname, url: b.url })),
-            dbUrl,
-            imagesCount: images.length,
-            images
-        });
-    } catch (e) {
-        res.status(500).json({ error: e.message, stack: e.stack });
-    }
-});
-
 // Delete Image
 app.delete('/api/imagenes/:id', requireAdmin, async (req, res) => {
     try {
