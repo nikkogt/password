@@ -43,7 +43,24 @@ class BlobDB {
             if (!url) return []; // No DB exists yet
             const response = await fetch(url);
             if (!response.ok) return [];
-            return await response.json();
+
+            let images = await response.json();
+
+            // Data Integrity Check: Ensure all images have _id
+            let hasChanges = false;
+            images = images.map(img => {
+                if (!img._id) {
+                    img._id = 'legacy_' + Math.random().toString(36).substr(2, 9);
+                    hasChanges = true;
+                }
+                return img;
+            });
+
+            if (hasChanges) {
+                await this.save(images); // Self-heal the database
+            }
+
+            return images;
         } catch (e) {
             console.error('Error reading DB:', e);
             return [];

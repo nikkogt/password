@@ -12,16 +12,23 @@ const contactMessageStatus = document.getElementById('contactMessageStatus');
 function hidePreloader() {
     if (preloader) {
         // Asegura que se ha cargado el CSS antes de ocultar
-        setTimeout(() => {
+        const fadeOut = () => {
             preloader.classList.add('hidden');
-        }, 300); // Pequeño retardo para asegurar que la página es visible
+            setTimeout(() => {
+                if (preloader.parentNode) preloader.parentNode.removeChild(preloader);
+            }, 600);
+        };
+        setTimeout(fadeOut, 300);
     }
 }
+
+// Failsafe: Force hide after 3 seconds no matter what
+setTimeout(hidePreloader, 3000);
 
 // --- 2. Acordeón de Servicios ---
 function setupAccordion() {
     const headers = document.querySelectorAll('.accordion-header');
-    
+
     headers.forEach(header => {
         header.addEventListener('click', () => {
             const content = document.getElementById(header.getAttribute('aria-controls'));
@@ -53,8 +60,8 @@ function setupAccordion() {
 async function loadMedia() {
     try {
         // Asumiendo que esta API devuelve todas las imágenes (Galería y Tips)
-        const response = await fetch('/api/public/images'); 
-        
+        const response = await fetch('/api/public/images');
+
         if (!response.ok) {
             throw new Error(`Error HTTP: ${response.status}`);
         }
@@ -70,7 +77,7 @@ async function loadMedia() {
         // Filtrar y procesar datos
         const galleryImages = images.filter(img => img.category === 'gallery');
         const tipImages = images.filter(img => img.category === 'tips');
-        
+
         // Cargar Galería
         if (galleryImages.length > 0) {
             galleryImages.forEach(image => {
@@ -86,7 +93,7 @@ async function loadMedia() {
                 galleryGrid.appendChild(item);
             });
         } else {
-             galleryGrid.innerHTML = '<p style="text-align:center; color: var(--color-text-light);">Galería de proyectos en construcción. ¡Vuelve pronto!</p>';
+            galleryGrid.innerHTML = '<p style="text-align:center; color: var(--color-text-light);">Galería de proyectos en construcción. ¡Vuelve pronto!</p>';
         }
 
         // Cargar Tips (Carrusel)
@@ -117,9 +124,9 @@ async function loadMedia() {
             // Iniciar el carrusel después de cargar los tips
             initCarousel();
         } else {
-             carouselTrack.innerHTML = '<div style="padding: 20px;"><p style="text-align:center; color: var(--color-text-dark);">Aún no hay tips de seguridad cargados.</p></div>';
-             prevButton.style.display = 'none';
-             nextButton.style.display = 'none';
+            carouselTrack.innerHTML = '<div style="padding: 20px;"><p style="text-align:center; color: var(--color-text-dark);">Aún no hay tips de seguridad cargados.</p></div>';
+            prevButton.style.display = 'none';
+            nextButton.style.display = 'none';
         }
 
     } catch (error) {
@@ -136,7 +143,7 @@ let track; // Elemento .carousel-track
 function initCarousel() {
     slides = Array.from(carouselTrack.querySelectorAll('.carousel-slide'));
     track = carouselTrack;
-    
+
     if (slides.length === 0) return;
 
     // 4.1 Posicionar los slides inicialmente (Necesario para el cálculo)
@@ -163,7 +170,7 @@ function initCarousel() {
 function setSlidePosition(slide, index) {
     // Calcula la posición horizontal de cada slide.
     // Aunque el CSS flex ya los coloca, esta función recalcula el ancho.
-    slide.style.width = track.clientWidth + 'px'; 
+    slide.style.width = track.clientWidth + 'px';
 }
 
 function moveToSlide(targetIndex) {
@@ -181,7 +188,7 @@ function moveToSlide(targetIndex) {
 
 function updateTrackPosition() {
     if (slides.length === 0) return;
-    
+
     // Mueve el track a la posición del slide actual
     const offset = slides[currentSlide].offsetLeft;
     track.style.transform = `translateX(-${offset}px)`;
@@ -205,9 +212,9 @@ function updateDots() {
 
 // --- 5. Formulario de Contacto ---
 
-contactForm.addEventListener('submit', async function(event) {
+contactForm.addEventListener('submit', async function (event) {
     event.preventDefault();
-    
+
     // Recoger datos del formulario
     const name = document.getElementById('contactName').value;
     const email = document.getElementById('contactEmail').value;
@@ -248,10 +255,10 @@ contactForm.addEventListener('submit', async function(event) {
 window.addEventListener('load', () => {
     // 1. Configurar el acordeón
     setupAccordion();
-    
+
     // 2. Cargar media dinámica (inicia el carrusel internamente)
     loadMedia();
-    
+
     // 3. Ocultar el preloader después de todo
     hidePreloader();
 });
