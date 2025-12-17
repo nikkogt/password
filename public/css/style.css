@@ -548,399 +548,243 @@ section {
 }
 
 /* =========================================
-   Admin Panel Styles (Premium Redesign)
+   Admin Panel Styles
    ========================================= */
 
 .admin-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 25px 5%;
-    background: #111;
-    border-bottom: 1px solid #333;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    padding: 18px 5%;
+    background: linear-gradient(90deg, rgba(26, 26, 26, 0.95), rgba(34, 34, 34, 0.95));
+    border-bottom: 1px solid #222;
 }
 
 .admin-title {
-    color: var(--color-primary);
-    font-size: 1.8em;
-    font-weight: 800;
+    color: var(--color-accent);
+    font-size: 1.4em;
     margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
 .card {
-    background: #222;
-    border: 1px solid #333;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    margin-bottom: 30px;
-}
-
-.section-title {
-    color: white;
-    font-size: 1.5em;
-    margin-bottom: 25px;
-    border-left: 5px solid var(--color-primary);
-    padding-left: 15px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
 }
 
 .admin-main {
-    max-width: 1200px;
-    margin: 40px auto;
+    max-width: 1000px;
+    margin: 30px auto;
     display: grid;
-    grid-template-columns: 1fr;
-    /* Centered single column for better focus, or 1fr 1fr if wide enough */
-    gap: 30px;
-    padding: 0 20px;
-}
-
-@media (min-width: 1024px) {
-    .admin-main {
-        grid-template-columns: 400px 1fr;
-        /* Sidebar form, Wide list */
-        align-items: start;
-    }
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 0 5%;
 }
 
 .upload-form .form-row {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
-.upload-form label {
-    display: block;
-    margin-bottom: 8px;
-    color: #ccc;
-    font-weight: 500;
-}
-
-/* Larger Inputs */
 .input-text,
 .input-select,
 .input-file {
-    padding: 15px;
-    border-radius: 8px;
-    border: 2px solid #444;
-    background: #1a1a1a;
-    color: white;
-    font-size: 1em;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--color-text-light);
     outline: none;
-    transition: all 0.3s;
-    width: 100%;
 }
 
 .input-text:focus,
 .input-select:focus {
+    box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.08);
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.1);
 }
 
-.file-upload-wrapper {
-    position: relative;
-    overflow: hidden;
-    display: inline-block;
-}
-
-/* Buttons */
 .form-actions {
-    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .btn {
-    padding: 15px 30px;
+    padding: 10px 14px;
     border-radius: 8px;
     border: none;
     cursor: pointer;
     font-weight: 700;
-    font-size: 1.1em;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
 }
 
 .btn.primary {
     background: var(--color-primary);
-    color: white;
-    width: 100%;
-    /* Full width on mobile/sidebar */
-}
-
-.btn.primary:hover {
-    background: #ff7043;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 87, 34, 0.3);
+    color: var(--color-background-dark);
 }
 
 .btn.secondary {
     background: transparent;
-    color: #aaa;
-    border: 2px solid #444;
+    color: var(--color-text-light);
+    border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.btn.secondary:hover {
-    border-color: #fff;
-    color: #fff;
+.muted-message {
+    color: #bbb;
+    font-size: 0.9em;
 }
 
-/* Image List */
 .images-list {
     list-style: none;
     padding: 0;
 }
 
-.image-list-item {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    /* Image - Info - Button */
+.images-list li {
+    display: flex;
     align-items: center;
-    gap: 20px;
-    padding: 20px;
-    border-radius: 10px;
-    background: #252525;
-    border: 1px solid #333;
-    margin-bottom: 15px;
-    transition: transform 0.2s;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.06);
+    margin-bottom: 8px;
 }
 
-.image-list-item:hover {
+.images-list img {
+    border-radius: 4px;
+    margin-right: 12px;
+}
 
-    .image-info {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
-
-    /* =========================================
-   Login View Styles (Centered & Elegant)
-   ========================================= */
-    .login-layout {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        background: #111;
-    }
-
-    #loginView {
-        background: #222;
-        padding: 50px;
-        border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        width: 90%;
-        max-width: 450px;
-        text-align: center;
-        border: 1px solid #333;
-    }
-
-    #loginView h2 {
-        color: var(--color-primary);
-        margin-bottom: 30px;
-        font-size: 2em;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    #loginForm input {
-        width: 100%;
-        padding: 16px;
-        margin-bottom: 20px;
-        background: #1a1a1a;
-        border: 2px solid #333;
-        border-radius: 8px;
-        color: white;
-        font-size: 1.1em;
-        transition: border-color 0.3s;
-    }
-
-    #loginForm input:focus {
-        border-color: var(--color-primary);
-        outline: none;
-    }
-
-    #loginForm button {
-        width: 100%;
-        padding: 18px;
-        background: var(--color-primary);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 1.2em;
-        font-weight: bold;
-        cursor: pointer;
-        text-transform: uppercase;
-        transition: transform 0.2s, background 0.3s;
-    }
-
-    #loginForm button:hover {
-        background: #ff7043;
-        transform: translateY(-2px);
-    }
-
-    /* =========================================
-   Admin Panel Styles (Compact & Centered)
-   ========================================= */
+@media (max-width: 900px) {
     .admin-main {
-        max-width: 800px;
-        /* Smaller container as requested */
-        margin: 40px auto;
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-        padding: 0 20px;
+        grid-template-columns: 1fr;
     }
+}
 
-    @media (min-width: 1024px) {
-        .admin-main {
-            grid-template-columns: 1fr;
-            /* Force single column even on desktop for "compact" look */
-            max-width: 700px;
-        }
-    }
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #333;
+    background-color: #252525;
+    color: var(--color-text-light);
+    border-radius: 4px;
+}
 
-    /* Image List Thumbnails - Smaller as requested */
-    .image-list-item img,
-    .image-info img {
-        width: 40px !important;
-        /* Force smaller size */
-        height: 40px !important;
-        border-radius: 4px;
-    }
+.contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
 
-    .image-list-item {
-        padding: 15px;
-        /* More compact padding */
-        grid-template-columns: auto 1fr auto;
-        gap: 15px;
-    }
+.main-footer {
+    text-align: center;
+    padding: 30px 5%;
+    background-color: var(--color-background-dark);
+    border-top: 1px solid #282828;
+    color: #888;
+    font-size: 0.9em;
+}
 
-    /* Rest of Contact Form inputs (Admin overrides) */
-    .contact-form input,
-    .contact-form textarea {
-        width: 100%;
-        padding: 15px;
-        margin-bottom: 20px;
-        border: 1px solid #333;
-        background-color: #252525;
-        color: var(--color-text-light);
-        border-radius: 4px;
-    }
-
-    .contact-form textarea {
-        min-height: 150px;
-        resize: vertical;
-    }
-
-    .main-footer {
-        text-align: center;
-        padding: 30px 5%;
-        background-color: var(--color-background-dark);
-        border-top: 1px solid #282828;
-        color: #888;
-        font-size: 0.9em;
-    }
-
-    /* =========================================
+/* =========================================
    X. Preloader
    ========================================= */
 
-    #preloader {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: var(--color-background-dark);
-        z-index: 9999;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        opacity: 1;
-        transition: opacity 0.5s ease-out;
-        /* Animación de desvanecimiento suave */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-background-dark);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+    /* Animación de desvanecimiento suave */
+}
+
+.loader-spinner {
+    border: 6px solid #333;
+    border-top: 6px solid var(--color-primary);
+    /* Color primario en el borde superior */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
     }
 
-    .loader-spinner {
-        border: 6px solid #333;
-        border-top: 6px solid var(--color-primary);
-        /* Color primario en el borde superior */
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        animation: spin 1s linear infinite;
+    100% {
+        transform: rotate(360deg);
     }
+}
 
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
+/* Estilo para ocultar el preloader */
+#preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
 
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-
-    /* Estilo para ocultar el preloader */
-    #preloader.hidden {
-        opacity: 0;
-        visibility: hidden;
-    }
-
-    /* =========================================
+/* =========================================
    XI. Responsividad Básica
    ========================================= */
 
-    @media (max-width: 900px) {
-        .main-header {
-            flex-direction: column;
-            text-align: center;
-        }
-
-        .main-header nav {
-            margin-top: 15px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .main-header nav a,
-        .contact-info {
-            margin: 5px 10px;
-        }
-
-        .hero-content h1 {
-            font-size: 3em;
-        }
-
-        .gallery-grid {
-            grid-template-columns: 1fr;
-            /* Una columna en móviles */
-        }
-    }
-
-    /* Estilos para la sección de ubicación */
-    #ubicacion {
-        padding: 60px 5%;
-        background-color: var(--color-background-dark);
-        color: var(--color-text-light);
+@media (max-width: 900px) {
+    .main-header {
+        flex-direction: column;
         text-align: center;
     }
 
-    #ubicacion .section-title {
-        color: var(--color-accent);
-        margin-bottom: 10px;
+    .main-header nav {
+        margin-top: 15px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
-    #ubicacion .section-subtitle {
-        margin-bottom: 20px;
-        font-size: 1.1em;
+    .main-header nav a,
+    .contact-info {
+        margin: 5px 10px;
     }
 
-    #ubicacion .cta-button {
-        display: inline-block;
-        margin-top: 20px;
+    .hero-content h1 {
+        font-size: 3em;
     }
+
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        /* Una columna en móviles */
+    }
+}
+
+/* Estilos para la sección de ubicación */
+#ubicacion {
+    padding: 60px 5%;
+    background-color: var(--color-background-dark);
+    color: var(--color-text-light);
+    text-align: center;
+}
+
+#ubicacion .section-title {
+    color: var(--color-accent);
+    margin-bottom: 10px;
+}
+
+#ubicacion .section-subtitle {
+    margin-bottom: 20px;
+    font-size: 1.1em;
+}
+
+#ubicacion .cta-button {
+    display: inline-block;
+    margin-top: 20px;
 }

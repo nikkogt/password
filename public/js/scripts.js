@@ -12,18 +12,11 @@ const contactMessageStatus = document.getElementById('contactMessageStatus');
 function hidePreloader() {
     if (preloader) {
         // Asegura que se ha cargado el CSS antes de ocultar
-        const fadeOut = () => {
+        setTimeout(() => {
             preloader.classList.add('hidden');
-            setTimeout(() => {
-                if (preloader.parentNode) preloader.parentNode.removeChild(preloader);
-            }, 600);
-        };
-        setTimeout(fadeOut, 300);
+        }, 300); // Pequeño retardo para asegurar que la página es visible
     }
 }
-
-// Failsafe: Force hide after 3 seconds no matter what
-setTimeout(hidePreloader, 3000);
 
 // --- 2. Acordeón de Servicios ---
 function setupAccordion() {

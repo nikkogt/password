@@ -151,23 +151,27 @@ async function fetchImages(page = 1) {
 
         images.forEach(image => {
             const li = document.createElement('li');
-            li.className = 'image-list-item'; // Use class for styling
-
+            li.style.display = 'flex';
+            li.style.justifyContent = 'space-between';
+            li.style.alignItems = 'center';
+            li.style.marginBottom = '10px';
+            li.style.borderBottom = '1px solid #333';
+            li.style.paddingBottom = '10px';
             // Show category and any metadata (title/description)
             const metaParts = [];
-            if (image.category) metaParts.push(`<span class="badge ${image.category}">${image.category}</span>`);
-            if (image.title) metaParts.push(`<strong>${image.title}</strong>`);
-            if (image.description) metaParts.push(image.description);
+            if (image.category) metaParts.push(`<strong>${image.category}</strong>`);
+            if (image.title) metaParts.push(`Title: ${image.title}`);
+            if (image.description) metaParts.push(`Desc: ${image.description}`);
 
             li.innerHTML = `
-                <div class="image-info">
-                    <img src="${image.url}" alt="${image.originalName}" loading="lazy">
-                    <div class="image-details">
-                        <div class="image-name">${image.originalName}</div>
-                        <div class="image-meta">${metaParts.join(' • ')}</div>
+                <div style="display: flex; align-items: center;">
+                    <img src="${image.url}" alt="${image.originalName}" style="width: 50px; height: 50px; object-fit: cover; margin-right: 15px; border: 1px solid var(--color-accent);" loading="lazy">
+                    <div>
+                        <div style="font-size:0.85em">${image.originalName} (ID: ${image._id})</div>
+                        <div style="font-size:0.75em; color:#bbb">${metaParts.join(' — ')}</div>
                     </div>
                 </div>
-                <button class="delete-btn" data-id="${image._id}">Eliminar</button>
+                <button class="delete-btn" data-id="${image._id}" style="background-color: var(--color-primary); color: white; border: none; padding: 5px 10px; cursor: pointer;">Eliminar</button>
             `;
             currentImagesList.appendChild(li);
         });
@@ -204,7 +208,7 @@ async function fetchImages(page = 1) {
         // Añadir el evento click a los nuevos botones de eliminar
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', (e) => {
-                const id = e.target.getAttribute('data-id'); // ID is string now
+                const id = e.target.getAttribute('data-id');
                 deleteImage(id);
             });
         });

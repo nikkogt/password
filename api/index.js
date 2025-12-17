@@ -43,24 +43,7 @@ class BlobDB {
             if (!url) return []; // No DB exists yet
             const response = await fetch(url);
             if (!response.ok) return [];
-
-            let images = await response.json();
-
-            // Data Integrity Check: Ensure all images have _id
-            let hasChanges = false;
-            images = images.map(img => {
-                if (!img._id) {
-                    img._id = 'legacy_' + Math.random().toString(36).substr(2, 9);
-                    hasChanges = true;
-                }
-                return img;
-            });
-
-            if (hasChanges) {
-                await this.save(images); // Self-heal the database
-            }
-
-            return images;
+            return await response.json();
         } catch (e) {
             console.error('Error reading DB:', e);
             return [];
@@ -224,8 +207,7 @@ app.post('/api/imagenes/subir', requireAdmin, upload.single('imagen'), async (re
 app.delete('/api/imagenes/:id', requireAdmin, async (req, res) => {
     try {
         const images = await BlobDB.getImages();
-        // Loose comparison to handle string vs number ID edge cases
-        const image = images.find(img => String(img._id) === String(req.params.id));
+        const image = images.find(img => img._id === req.params.id);
 
         if (!image) return res.status(404).json({ message: 'Not found' });
 
