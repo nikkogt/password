@@ -167,33 +167,56 @@ app.get('/api/test-db', async (req, res) => {
         const state = mongoose.connection.readyState;
         const states = { 0: 'Desconectado', 1: 'Conectado', 2: 'Conectando', 3: 'Desconectando' };
 
+        // Diagnóstico de la URI (SIN mostrar la contraseña real)
+        const uri = process.env.MONGODB_URI || '';
+        let uriDebug = 'No definida';
+        if (uri) {
+            try {
+                if (uri.includes('@')) {
+                    const parts = uri.split('@');
+                    const prefix = parts[0].split('//')[1]; // user:password
+                    const user = prefix.split(':')[0];
+                    const host = parts[1];
+                    uriDebug = `User: ${user} | Host: ${host}`;
+                } else {
+                    uriDebug = 'Formato no estándar (quizás falta @)';
+                }
+            } catch (e) { uriDebug = 'Error parseando URI'; }
+        }
+
         let dbInfo = {
             state: states[state],
             host: mongoose.connection.host,
-            name: mongoose.connection.name
+            name: mongoose.connection.name,
+            uriStructure: uriDebug
         };
 
-        // Si no está conectado, intentar conectar explícitamente para ver el error
+        // Si no está conectado, intentar conectar explícitamente
         if (state !== 1) {
             try {
                 if (process.env.MONGODB_URI) {
-                    await mongoose.connect(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 5000 });
+                    // Intento de conexión con timeout corto y socket timeout
+                    await mongoose.connect(process.env.MONGODB_URI, {
+                        serverSelectionTimeoutMS: 5000,
+                        socketTimeoutMS: 5000
+                    });
                     dbInfo.state = 'Reconectado exitosamente';
+                    dbInfo.host = mongoose.connection.host;
                 } else {
                     throw new Error('MONGODB_URI no definida');
                 }
             } catch (connErr) {
                 return res.status(500).json({
-                    message: 'Error intentando conectar',
-                    error: connErr.message,
-                    env_var_exists: !!process.env.MONGODB_URI
+                    status: 'Error de Conexión',
+                    message: connErr.message,
+                    uriStructure: uriDebug
                 });
             }
         }
 
         res.status(200).json({ status: 'OK', info: dbInfo });
     } catch (error) {
-        res.status(500).json({ status: 'Error', error: error.message });
+        res.status(500).json({ status: 'Error General', error: error.message });
     }
 });
 
