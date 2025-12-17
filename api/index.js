@@ -198,8 +198,11 @@ app.post('/api/imagenes/subir', requireAdmin, upload.single('imagen'), async (re
         const saved = await BlobDB.addImage(newImage);
         return res.status(200).json({
             success: true,
-            message: 'Imagen eliminada exitosamente.'
-        }); console.error(e);
+            message: 'Imagen subida exitosamente.',
+            image: saved
+        });
+    } catch (e) {
+        console.error(e);
         res.status(500).json({ success: false, message: e.message });
     }
 });
@@ -218,7 +221,10 @@ app.delete('/api/imagenes/:id', requireAdmin, async (req, res) => {
         }
 
         await BlobDB.deleteImage(req.params.id);
-        res.json({ success: true });
+        res.json({
+            success: true,
+            message: 'Imagen eliminada exitosamente.'
+        });
     } catch (e) {
         res.status(500).json({ success: false, message: e.message });
     }
