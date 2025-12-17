@@ -1,11 +1,17 @@
 /* Paleta de Colores y Variables (Identidad Visual PassWord S.A.S.) */
 :root {
-    --color-primary: #FF5722; /* Naranja Fuerte (Marca / CTAs) */
-    --color-accent: #00E0FFA; /* Azul Eléctrico (Tecnología / Resaltado) */
-    --color-background-dark: #1A1A1A; /* Negro Profundo (Fondo principal) */
-    --color-light: #F5F5F5; /* Gris Muy Claro (Fondo de secciones legibles) */
-    --color-text-light: #E0E0E0; /* Texto claro para fondos oscuros */
-    --color-text-dark: #1A1A1A; /* Texto oscuro para fondos claros */
+    --color-primary: #FF5722;
+    /* Naranja Fuerte (Marca / CTAs) */
+    --color-accent: #00E0FFA;
+    /* Azul Eléctrico (Tecnología / Resaltado) */
+    --color-background-dark: #1A1A1A;
+    /* Negro Profundo (Fondo principal) */
+    --color-light: #F5F5F5;
+    /* Gris Muy Claro (Fondo de secciones legibles) */
+    --color-text-light: #E0E0E0;
+    /* Texto claro para fondos oscuros */
+    --color-text-dark: #1A1A1A;
+    /* Texto oscuro para fondos claros */
     --font-family-sans: 'Arial', sans-serif;
 }
 
@@ -33,8 +39,11 @@ a:hover {
     color: var(--color-primary);
 }
 
-h1, h2, h3 {
-    color: var(--color-primary); /* Los títulos usan el color principal */
+h1,
+h2,
+h3 {
+    color: var(--color-primary);
+    /* Los títulos usan el color principal */
     margin-bottom: 0.5em;
     font-weight: 700;
 }
@@ -50,8 +59,10 @@ section {
     color: var(--color-text-dark);
 }
 
-.light-section h2, .light-section h3 {
-    color: var(--color-background-dark); /* Títulos oscuros en fondo claro */
+.light-section h2,
+.light-section h3 {
+    color: var(--color-background-dark);
+    /* Títulos oscuros en fondo claro */
 }
 
 /* Botón de Llamada a la Acción (CTA) */
@@ -59,7 +70,8 @@ section {
     display: inline-block;
     padding: 12px 30px;
     background-color: var(--color-primary);
-    color: var(--color-background-dark); /* Texto oscuro en botón naranja */
+    color: var(--color-background-dark);
+    /* Texto oscuro en botón naranja */
     font-weight: bold;
     border-radius: 5px;
     transition: background-color 0.3s, transform 0.2s;
@@ -70,7 +82,8 @@ section {
 }
 
 .cta-button:hover {
-    background-color: #E64A19; /* Tono más oscuro de naranja */
+    background-color: #E64A19;
+    /* Tono más oscuro de naranja */
     color: var(--color-text-light);
     transform: translateY(-2px);
 }
@@ -80,13 +93,20 @@ section {
    ========================================= */
 
 :root {
-    --color-primary: #FF5722; /* Naranja Fuerte (Marca / CTAs) */
-    --color-accent: #00E0FFA; /* Azul Eléctrico (Tecnología / Resaltado) */
-    --color-background-dark: #1A1A1A; /* Negro Profundo (Fondo principal) */
-    --color-light: #F5F5F5; /* Gris Muy Claro (Fondo de secciones legibles) */
-    --color-text-light: #E0E0E0; /* Texto claro para fondos oscuros */
-    --color-text-dark: #1A1A1A; /* Texto oscuro para fondos claros */
-    --font-family-sans: 'Montserrat', sans-serif; /* Se recomienda usar una fuente como Montserrat */
+    --color-primary: #FF5722;
+    /* Naranja Fuerte (Marca / CTAs) */
+    --color-accent: #00E0FFA;
+    /* Azul Eléctrico (Tecnología / Resaltado) */
+    --color-background-dark: #1A1A1A;
+    /* Negro Profundo (Fondo principal) */
+    --color-light: #F5F5F5;
+    /* Gris Muy Claro (Fondo de secciones legibles) */
+    --color-text-light: #E0E0E0;
+    /* Texto claro para fondos oscuros */
+    --color-text-dark: #1A1A1A;
+    /* Texto oscuro para fondos claros */
+    --font-family-sans: 'Montserrat', sans-serif;
+    /* Se recomienda usar una fuente como Montserrat */
 }
 
 /* Reset y Tipografía */
@@ -148,7 +168,7 @@ section {
 }
 
 .cta-button:hover {
-    background-color: #E64A19; 
+    background-color: #E64A19;
     color: var(--color-text-light);
     transform: translateY(-2px);
 }
@@ -170,9 +190,11 @@ section {
 }
 
 .logo-img {
-    height: 80px; /* Ajusta la altura para que se vea bien en el header */
+    height: 80px;
+    /* Ajusta la altura para que se vea bien en el header */
     width: auto;
-    display: block; /* Asegura que la imagen se comporta bien */
+    display: block;
+    /* Asegura que la imagen se comporta bien */
 }
 
 .main-header nav a {
@@ -195,8 +217,8 @@ section {
    ========================================= */
 
 .hero-section {
-    background: linear-gradient(rgba(26, 26, 26, 0.85), rgba(26, 26, 26, 0.95)), 
-                url('/uploads/hero-main.webp') center center no-repeat;
+    background: linear-gradient(rgba(26, 26, 26, 0.85), rgba(26, 26, 26, 0.95)),
+        url('/uploads/hero-main.webp') center center no-repeat;
     background-size: cover;
     height: 90vh;
     display: flex;
@@ -235,7 +257,8 @@ section {
     color: var(--color-text-dark);
 }
 
-.light-section h2, .light-section h3 {
+.light-section h2,
+.light-section h3 {
     color: var(--color-background-dark);
 }
 
@@ -253,13 +276,15 @@ section {
     margin-bottom: 10px;
     border-radius: 4px;
     overflow: hidden;
-    background-color: var(--color-light); /* Fondo claro de la sección */
+    background-color: var(--color-light);
+    /* Fondo claro de la sección */
 }
 
 .accordion-header {
     width: 100%;
     padding: 15px 20px;
-    background-color: var(--color-background-dark); /* Color oscuro para el encabezado */
+    background-color: var(--color-background-dark);
+    /* Color oscuro para el encabezado */
     color: var(--color-text-light);
     text-align: left;
     font-size: 1.1em;
@@ -287,7 +312,8 @@ section {
 
 .accordion-header[aria-expanded="true"]::after {
     content: '−';
-    transform: translateY(-50%) rotate(45deg); /* Animación de rotación al abrir */
+    transform: translateY(-50%) rotate(45deg);
+    /* Animación de rotación al abrir */
     color: var(--color-accent);
 }
 
@@ -295,7 +321,8 @@ section {
     background-color: var(--color-light);
     color: var(--color-text-dark);
     padding: 0 20px;
-    max-height: 0; /* Clave para el efecto de colapso animado */
+    max-height: 0;
+    /* Clave para el efecto de colapso animado */
     overflow: hidden;
     transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
 }
@@ -308,7 +335,8 @@ section {
 
 /* Estilo cuando está abierto (manejado por JS) */
 .accordion-content.open {
-    max-height: 500px; /* Un valor grande suficiente para cualquier contenido */
+    max-height: 500px;
+    /* Un valor grande suficiente para cualquier contenido */
     padding: 0 20px 20px 20px;
 }
 
@@ -348,7 +376,8 @@ section {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(0, 224, 255, 0.8); /* Azul eléctrico semitransparente */
+    background-color: rgba(0, 224, 255, 0.8);
+    /* Azul eléctrico semitransparente */
     color: var(--color-background-dark);
     padding: 15px;
     font-weight: bold;
@@ -418,15 +447,20 @@ section {
 
 .carousel-track {
     display: flex;
-    transition: transform .5s ease-in-out; /* Instant transition to prevent peeking */
+    transition: transform .5s ease-in-out;
+    /* Instant transition to prevent peeking */
 }
 
 .carousel-slide {
-    flex-shrink: 0; /* Evita que las diapositivas se encojan */
+    flex-shrink: 0;
+    /* Evita que las diapositivas se encojan */
     width: 100%;
-    position: relative; /* Para posicionar la imagen absolutamente */
-    min-height: 500px; /* Altura mínima */
-    overflow: hidden; /* Asegura que la imagen no se salga */
+    position: relative;
+    /* Para posicionar la imagen absolutamente */
+    min-height: 500px;
+    /* Altura mínima */
+    overflow: hidden;
+    /* Asegura que la imagen no se salga */
 }
 
 .carousel-slide h3 {
@@ -461,7 +495,8 @@ section {
 }
 
 .carousel-button:hover {
-    background-color: rgba(0, 224, 255, 0.8); /* Azul eléctrico en hover */
+    background-color: rgba(0, 224, 255, 0.8);
+    /* Azul eléctrico en hover */
 }
 
 .prev-button {
@@ -521,7 +556,7 @@ section {
     justify-content: space-between;
     align-items: center;
     padding: 18px 5%;
-    background: linear-gradient(90deg, rgba(26,26,26,0.95), rgba(34,34,34,0.95));
+    background: linear-gradient(90deg, rgba(26, 26, 26, 0.95), rgba(34, 34, 34, 0.95));
     border-bottom: 1px solid #222;
 }
 
@@ -532,11 +567,11 @@ section {
 }
 
 .card {
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border: 1px solid rgba(255,255,255,0.04);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+    border: 1px solid rgba(255, 255, 255, 0.04);
     padding: 18px;
     border-radius: 10px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
     margin-bottom: 20px;
 }
 
@@ -555,17 +590,20 @@ section {
     margin-bottom: 10px;
 }
 
-.input-text, .input-select, .input-file {
+.input-text,
+.input-select,
+.input-file {
     padding: 10px 12px;
     border-radius: 6px;
-    border: 1px solid rgba(255,255,255,0.06);
-    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.02);
     color: var(--color-text-light);
     outline: none;
 }
 
-.input-text:focus, .input-select:focus {
-    box-shadow: 0 0 0 3px rgba(255,87,34,0.08);
+.input-text:focus,
+.input-select:focus {
+    box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.08);
     border-color: var(--color-primary);
 }
 
@@ -591,7 +629,7 @@ section {
 .btn.secondary {
     background: transparent;
     color: var(--color-text-light);
-    border: 1px solid rgba(255,255,255,0.06);
+    border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .muted-message {
@@ -604,14 +642,86 @@ section {
     padding: 0;
 }
 
-.images-list li {
+/* Admin Image List Improvements */
+.image-list-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 12px;
+    transition: background 0.2s;
+}
+
+.image-list-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.image-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.image-info img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
     border-radius: 6px;
-    background: rgba(0,0,0,0.06);
-    margin-bottom: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.image-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.image-name {
+    font-weight: 500;
+    color: var(--color-text-light);
+    font-size: 0.95em;
+}
+
+.image-meta {
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 4px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.badge.gallery {
+    background: rgba(0, 224, 255, 0.2);
+    color: #00e0ff;
+}
+
+.badge.tips {
+    background: rgba(255, 87, 34, 0.2);
+    color: #ff5722;
+}
+
+.delete-btn {
+    background-color: #ff3333;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: background 0.3s;
+}
+
+.delete-btn:hover {
+    background-color: #cc0000;
 }
 
 .images-list img {
@@ -620,10 +730,13 @@ section {
 }
 
 @media (max-width: 900px) {
-    .admin-main { grid-template-columns: 1fr; }
+    .admin-main {
+        grid-template-columns: 1fr;
+    }
 }
 
-.contact-form input, .contact-form textarea {
+.contact-form input,
+.contact-form textarea {
     width: 100%;
     padding: 15px;
     margin-bottom: 20px;
@@ -663,12 +776,14 @@ section {
     justify-content: center;
     align-items: center;
     opacity: 1;
-    transition: opacity 0.5s ease-out; /* Animación de desvanecimiento suave */
+    transition: opacity 0.5s ease-out;
+    /* Animación de desvanecimiento suave */
 }
 
 .loader-spinner {
     border: 6px solid #333;
-    border-top: 6px solid var(--color-primary); /* Color primario en el borde superior */
+    border-top: 6px solid var(--color-primary);
+    /* Color primario en el borde superior */
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -676,8 +791,13 @@ section {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Estilo para ocultar el preloader */
@@ -695,7 +815,7 @@ section {
         flex-direction: column;
         text-align: center;
     }
-    
+
     .main-header nav {
         margin-top: 15px;
         display: flex;
@@ -703,7 +823,8 @@ section {
         justify-content: center;
     }
 
-    .main-header nav a, .contact-info {
+    .main-header nav a,
+    .contact-info {
         margin: 5px 10px;
     }
 
@@ -712,7 +833,8 @@ section {
     }
 
     .gallery-grid {
-        grid-template-columns: 1fr; /* Una columna en móviles */
+        grid-template-columns: 1fr;
+        /* Una columna en móviles */
     }
 }
 
