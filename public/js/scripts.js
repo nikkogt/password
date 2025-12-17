@@ -9,6 +9,7 @@ const contactForm = document.getElementById('contactForm');
 const contactMessageStatus = document.getElementById('contactMessageStatus');
 
 // --- 1. Preloader ---
+// --- 1. Preloader ---
 function hidePreloader() {
     if (preloader) {
         // Asegura que se ha cargado el CSS antes de ocultar
@@ -17,6 +18,9 @@ function hidePreloader() {
         }, 300); // Pequeño retardo para asegurar que la página es visible
     }
 }
+
+// Failsafe: Force hide preloader after 4 seconds max, even if load event hangs
+setTimeout(hidePreloader, 4000);
 
 // --- 2. Acordeón de Servicios ---
 function setupAccordion() {
