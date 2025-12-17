@@ -224,7 +224,8 @@ app.post('/api/imagenes/subir', requireAdmin, upload.single('imagen'), async (re
 app.delete('/api/imagenes/:id', requireAdmin, async (req, res) => {
     try {
         const images = await BlobDB.getImages();
-        const image = images.find(img => img._id === req.params.id);
+        // Loose comparison to handle string vs number ID edge cases
+        const image = images.find(img => String(img._id) === String(req.params.id));
 
         if (!image) return res.status(404).json({ message: 'Not found' });
 

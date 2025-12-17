@@ -714,76 +714,110 @@ section {
         gap: 15px;
     }
 
-    .image-info img {
-        width: 60px;
-        height: 60px;
-        object-fit: cover;
-        border-radius: 6px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .image-details {
+    /* =========================================
+   Login View Styles (Centered & Elegant)
+   ========================================= */
+    .login-layout {
         display: flex;
-        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #111;
     }
 
-    .image-name {
-        font-weight: 500;
-        color: var(--color-text-light);
-        font-size: 0.95em;
+    #loginView {
+        background: #222;
+        padding: 50px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        width: 90%;
+        max-width: 450px;
+        text-align: center;
+        border: 1px solid #333;
     }
 
-    .image-meta {
-        font-size: 0.8em;
-        color: #888;
-        margin-top: 4px;
-    }
-
-    .badge {
-        display: inline-block;
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-size: 0.75em;
-        font-weight: bold;
+    #loginView h2 {
+        color: var(--color-primary);
+        margin-bottom: 30px;
+        font-size: 2em;
         text-transform: uppercase;
+        letter-spacing: 1px;
     }
 
-    .badge.gallery {
-        background: rgba(0, 224, 255, 0.2);
-        color: #00e0ff;
+    #loginForm input {
+        width: 100%;
+        padding: 16px;
+        margin-bottom: 20px;
+        background: #1a1a1a;
+        border: 2px solid #333;
+        border-radius: 8px;
+        color: white;
+        font-size: 1.1em;
+        transition: border-color 0.3s;
     }
 
-    .badge.tips {
-        background: rgba(255, 87, 34, 0.2);
-        color: #ff5722;
+    #loginForm input:focus {
+        border-color: var(--color-primary);
+        outline: none;
     }
 
-    .delete-btn {
-        background-color: #ff3333;
+    #loginForm button {
+        width: 100%;
+        padding: 18px;
+        background: var(--color-primary);
         color: white;
         border: none;
-        padding: 8px 12px;
-        border-radius: 5px;
+        border-radius: 8px;
+        font-size: 1.2em;
+        font-weight: bold;
         cursor: pointer;
-        font-size: 0.85em;
-        transition: background 0.3s;
+        text-transform: uppercase;
+        transition: transform 0.2s, background 0.3s;
     }
 
-    .delete-btn:hover {
-        background-color: #cc0000;
+    #loginForm button:hover {
+        background: #ff7043;
+        transform: translateY(-2px);
     }
 
-    .images-list img {
-        border-radius: 4px;
-        margin-right: 12px;
+    /* =========================================
+   Admin Panel Styles (Compact & Centered)
+   ========================================= */
+    .admin-main {
+        max-width: 800px;
+        /* Smaller container as requested */
+        margin: 40px auto;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        padding: 0 20px;
     }
 
-    @media (max-width: 900px) {
+    @media (min-width: 1024px) {
         .admin-main {
             grid-template-columns: 1fr;
+            /* Force single column even on desktop for "compact" look */
+            max-width: 700px;
         }
     }
 
+    /* Image List Thumbnails - Smaller as requested */
+    .image-list-item img,
+    .image-info img {
+        width: 40px !important;
+        /* Force smaller size */
+        height: 40px !important;
+        border-radius: 4px;
+    }
+
+    .image-list-item {
+        padding: 15px;
+        /* More compact padding */
+        grid-template-columns: auto 1fr auto;
+        gap: 15px;
+    }
+
+    /* Rest of Contact Form inputs (Admin overrides) */
     .contact-form input,
     .contact-form textarea {
         width: 100%;
@@ -909,3 +943,4 @@ section {
         display: inline-block;
         margin-top: 20px;
     }
+}
