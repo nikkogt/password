@@ -196,14 +196,16 @@ app.post('/api/imagenes/subir', requireAdmin, upload.single('imagen'), async (re
         };
 
         const saved = await BlobDB.addImage(newImage);
+        console.log('Image saved to metadata:', saved);
         return res.status(200).json({
             success: true,
             message: 'Imagen subida exitosamente.',
             image: saved
         });
     } catch (e) {
-        console.error(e);
-        res.status(500).json({ success: false, message: e.message });
+        console.error('Upload Error:', e); // Detailed logging
+        console.error('Stack:', e.stack);
+        res.status(500).json({ success: false, message: 'Server error during upload: ' + e.message });
     }
 });
 

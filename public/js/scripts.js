@@ -246,12 +246,16 @@ contactForm.addEventListener('submit', async function (event) {
 
 // --- Inicialización al cargar la ventana ---
 window.addEventListener('load', async () => {
-    // 1. Configurar el acordeón
-    setupAccordion();
+    try {
+        // 1. Configurar el acordeón
+        setupAccordion();
 
-    // 2. Cargar media dinámica (inicia el carrusel internamente)
-    await loadMedia();
-
-    // 3. Ocultar el preloader después de todo
-    hidePreloader();
+        // 2. Cargar media dinámica (inicia el carrusel internamente)
+        await loadMedia();
+    } catch (err) {
+        console.error("Critical initialization error:", err);
+    } finally {
+        // 3. Ocultar el preloader después de todo, pase lo que pase
+        hidePreloader();
+    }
 });
