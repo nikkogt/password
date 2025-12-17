@@ -167,11 +167,11 @@ async function fetchImages(page = 1) {
                 <div style="display: flex; align-items: center;">
                     <img src="${image.url}" alt="${image.originalName}" style="width: 50px; height: 50px; object-fit: cover; margin-right: 15px; border: 1px solid var(--color-accent);" loading="lazy">
                     <div>
-                        <div style="font-size:0.85em">${image.originalName} (ID: ${image.id})</div>
+                        <div style="font-size:0.85em">${image.originalName}</div>
                         <div style="font-size:0.75em; color:#bbb">${metaParts.join(' — ')}</div>
                     </div>
                 </div>
-                <button class="delete-btn" data-id="${image.id}" style="background-color: var(--color-primary); color: white; border: none; padding: 5px 10px; cursor: pointer;">Eliminar</button>
+                <button class="delete-btn" data-id="${image._id}" style="background-color: var(--color-primary); color: white; border: none; padding: 5px 10px; cursor: pointer;">Eliminar</button>
             `;
             currentImagesList.appendChild(li);
         });
@@ -208,7 +208,7 @@ async function fetchImages(page = 1) {
         // Añadir el evento click a los nuevos botones de eliminar
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', (e) => {
-                const id = parseInt(e.target.getAttribute('data-id'));
+                const id = e.target.getAttribute('data-id'); // ID is string now
                 deleteImage(id);
             });
         });
