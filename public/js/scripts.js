@@ -57,7 +57,8 @@ function setupAccordion() {
 async function loadMedia() {
     try {
         // Asumiendo que esta API devuelve todas las imágenes (Galería y Tips)
-        const response = await fetch(`/api/public/images?t=${Date.now()}`);
+        // Force random to avoid ANY browser cache
+        const response = await fetch(`/api/public/images?nocache=${Math.random()}`);
 
         if (!response.ok) {
             throw new Error(`Error HTTP: ${response.status}`);
@@ -90,7 +91,17 @@ async function loadMedia() {
                 galleryGrid.appendChild(item);
             });
         } else {
-            galleryGrid.innerHTML = '<p style="text-align:center; color: var(--color-text-light);">Galería de proyectos en construcción. ¡Vuelve pronto!</p>';
+            // Debugging: Show why it's empty
+            const debugInfo = images.length > 0 ? `(Recibidos: ${images.length}, Filtro: gallery)` : '(API devolvió 0 imágenes)';
+            galleryGrid.innerHTML = `
+                <div style="text-align:center; width: 100%;">
+                    <p style="color: var(--color-text-light);">Galería de proyectos en construcción. ¡Vuelve pronto!</p>
+                    <p style="font-size: 0.8em; color: #666; margin-top: 10px;">Debug: ${debugInfo}</p>
+                    <details style="margin-top:10px; text-align:left; color:#444;">
+                        <summary>Ver datos crudos</summary>
+                        <pre style="font-size: 0.7em; white-space: pre-wrap;">${JSON.stringify(images, null, 2)}</pre>
+                    </details>
+                </div>`;
         }
 
         // Cargar Tips (Carrusel)
