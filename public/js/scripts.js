@@ -1,277 +1,170 @@
-// Constantes del DOM
-const galleryGrid = document.getElementById('galleryGrid');
-const carouselTrack = document.getElementById('carouselTrack');
-const carouselDots = document.getElementById('carouselDots');
-const prevButton = document.querySelector('.prev-button');
-const nextButton = document.querySelector('.next-button');
-const preloader = document.getElementById('preloader');
-const contactForm = document.getElementById('contactForm');
-const contactMessageStatus = document.getElementById('contactMessageStatus');
+// --- CONFIG ---
+const API_URL = '/api/public/images';
 
-// --- 1. Preloader ---
-// --- 1. Preloader ---
+// --- DOM ELEMENTS ---
+const dom = {
+    galleryGrid: document.getElementById('galleryGrid'),
+    carouselTrack: document.getElementById('carouselTrack'),
+    carouselDots: document.getElementById('carouselDots'),
+    preloader: document.getElementById('preloader'),
+    prevBtn: document.querySelector('.prev-button'),
+    nextBtn: document.querySelector('.next-button')
+};
+
+// --- INITIALIZATION ---
+window.addEventListener('load', async () => {
+    setupAccordion(); // UI logic
+
+    // Critical: Load media before removing preloader
+    try {
+        await loadMedia();
+    } catch (e) {
+        console.error('Media load failed', e);
+        // Ensure site is still usable
+        if (dom.galleryGrid) dom.galleryGrid.innerHTML = '<p>No se pudo cargar la galería.</p>';
+    } finally {
+        hidePreloader();
+    }
+});
+
+// Failsafe: Force hide preloader after 4s no matter what
+setTimeout(hidePreloader, 4000);
+
 function hidePreloader() {
-    if (preloader) {
-        // Asegura que se ha cargado el CSS antes de ocultar
-        setTimeout(() => {
-            preloader.classList.add('hidden');
-        }, 300); // Pequeño retardo para asegurar que la página es visible
+    if (dom.preloader && !dom.preloader.classList.contains('hidden')) {
+        dom.preloader.classList.add('hidden');
     }
 }
 
-// Failsafe: Force hide preloader after 4 seconds max, even if load event hangs
-setTimeout(hidePreloader, 4000);
+// --- MEDIA LOGIC ---
 
-// --- 2. Acordeón de Servicios ---
+async function loadMedia() {
+    // 1. Fetch with strict No-Cache to ensure fresh content from Vercel
+    const res = await fetch(`${API_URL}?nocache=${Math.random()}`);
+    if (!res.ok) throw new Error('API Error');
+
+    const data = await res.json();
+    const images = data.images || [];
+
+    // 2. Clear Containers
+    if (dom.galleryGrid) dom.galleryGrid.innerHTML = '';
+    if (dom.carouselTrack) dom.carouselTrack.innerHTML = '';
+    if (dom.carouselDots) dom.carouselDots.innerHTML = '';
+
+    // 3. Filter Categories
+    const galleryItems = images.filter(img => img.category === 'gallery');
+    const tipsItems = images.filter(img => img.category === 'tips');
+
+    // 4. Render Gallery
+    if (galleryItems.length > 0) {
+        galleryItems.forEach(img => {
+            const div = document.createElement('div');
+            div.className = 'gallery-item';
+            div.innerHTML = `
+                <img src="${img.url}" alt="${img.title || 'Proyecto'}" loading="lazy">
+                <div class="overlay">
+                    <p>${img.title || 'Proyecto PassWord S.A.S.'}</p>
+                </div>
+            `;
+            dom.galleryGrid.appendChild(div);
+        });
+    } else {
+        dom.galleryGrid.innerHTML = '<p style="text-align:center; color:#888;">Galería próximamente...</p>';
+    }
+
+    // 5. Render Tips (Carousel)
+    if (tipsItems.length > 0) {
+        tipsItems.forEach((img, index) => {
+            // Slide
+            const slide = document.createElement('div');
+            slide.className = 'carousel-slide';
+            slide.innerHTML = `
+                <div class="tip-content">
+                    <img src="${img.url}" alt="Tip" class="tip-image" loading="lazy">
+                    <div class="tip-text">
+                        <h3>${img.title || 'Consejo'}</h3>
+                        <p>${img.description || ''}</p>
+                    </div>
+                </div>
+            `;
+            dom.carouselTrack.appendChild(slide);
+
+            // Dot
+            const dot = document.createElement('span');
+            dot.className = 'dot';
+            dot.addEventListener('click', () => goToSlide(index));
+            dom.carouselDots.appendChild(dot);
+        });
+
+        initCarousel();
+    } else {
+        if (dom.carouselTrack) dom.carouselTrack.innerHTML = '<p style="text-align:center; padding:20px;">Pronto más consejos.</p>';
+        if (dom.prevBtn) dom.prevBtn.style.display = 'none';
+        if (dom.nextBtn) dom.nextBtn.style.display = 'none';
+    }
+}
+
+// --- CAROUSEL LOGIC ---
+let currentSlide = 0;
+let slides = [];
+
+function initCarousel() {
+    slides = Array.from(document.querySelectorAll('.carousel-slide'));
+    if (slides.length === 0) return;
+
+    updateCarousel();
+
+    if (dom.prevBtn) dom.prevBtn.addEventListener('click', () => moveSlide(-1));
+    if (dom.nextBtn) dom.nextBtn.addEventListener('click', () => moveSlide(1));
+
+    window.addEventListener('resize', updateCarousel);
+}
+
+function moveSlide(dir) {
+    if (slides.length === 0) return;
+    currentSlide = (currentSlide + dir + slides.length) % slides.length;
+    updateCarousel();
+}
+
+function goToSlide(index) {
+    currentSlide = index;
+    updateCarousel();
+}
+
+function updateCarousel() {
+    if (!dom.carouselTrack || slides.length === 0) return;
+
+    const width = dom.carouselTrack.parentElement.clientWidth;
+    // Resize slides to fit track
+    slides.forEach(slide => slide.style.width = `${width}px`);
+
+    // Move track
+    dom.carouselTrack.style.transform = `translateX(-${currentSlide * width}px)`;
+
+    // Update dots
+    const dots = document.querySelectorAll('.dot');
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
+}
+
+// --- UI UTILS ---
 function setupAccordion() {
     const headers = document.querySelectorAll('.accordion-header');
-
     headers.forEach(header => {
         header.addEventListener('click', () => {
             const content = document.getElementById(header.getAttribute('aria-controls'));
-            const isExpanded = header.getAttribute('aria-expanded') === 'true';
+            const isOpen = header.getAttribute('aria-expanded') === 'true';
 
-            // Cerrar todos los demás
+            // Close all
             document.querySelectorAll('.accordion-header').forEach(h => {
                 h.setAttribute('aria-expanded', 'false');
                 document.getElementById(h.getAttribute('aria-controls')).classList.remove('open');
             });
 
-            // Abrir o cerrar el actual
-            if (!isExpanded) {
+            // Toggle current
+            if (!isOpen) {
                 header.setAttribute('aria-expanded', 'true');
                 content.classList.add('open');
-            } else {
-                header.setAttribute('aria-expanded', 'false');
-                content.classList.remove('open');
             }
         });
     });
 }
-
-// --- 3. Carga Dinámica de Contenido (Galería y Tips) ---
-
-/**
- * Carga las imágenes desde la API y las distribuye en la galería y el carrusel.
- */
-async function loadMedia() {
-    try {
-        // Asumiendo que esta API devuelve todas las imágenes (Galería y Tips)
-        // Force random to avoid ANY browser cache
-        const response = await fetch(`/api/public/images?nocache=${Math.random()}`);
-
-        if (!response.ok) {
-            throw new Error(`Error HTTP: ${response.status}`);
-        }
-
-        const data = await response.json();
-        // Debug route structure returns images array directly in 'images' key, consistent with public route
-        const images = data.images || [];
-
-        // Limpiar contenedores antes de llenar
-        galleryGrid.innerHTML = '';
-        carouselTrack.innerHTML = '';
-        carouselDots.innerHTML = '';
-
-        // Filtrar y procesar datos
-        const galleryImages = images.filter(img => img.category === 'gallery');
-        const tipImages = images.filter(img => img.category === 'tips');
-
-        // Cargar Galería
-        if (galleryImages.length > 0) {
-            galleryImages.forEach(image => {
-                // image.url viene de la respuesta de la API (Blob URL)
-                const item = document.createElement('div');
-                item.className = 'gallery-item';
-                item.innerHTML = `
-                    <img src="${image.url}" alt="${image.title || 'Imagen de Galería'}" loading="lazy">
-                    <div class="overlay">
-                        <p>${image.title || 'Proyecto PassWord S.A.S.'}</p>
-                    </div>
-                `;
-                galleryGrid.appendChild(item);
-            });
-        } else {
-            // Debugging: Show why it's empty
-            const debugInfo = images.length > 0 ? `(Recibidos: ${images.length}, Filtro: gallery)` : '(API devolvió 0 imágenes)';
-            galleryGrid.innerHTML = `
-                <div style="text-align:center; width: 100%;">
-                    <p style="color: var(--color-text-light);">Galería de proyectos en construcción. ¡Vuelve pronto!</p>
-                    <p style="font-size: 0.8em; color: #666; margin-top: 10px;">Debug: ${debugInfo}</p>
-                    <details style="margin-top:10px; text-align:left; color:#444;">
-                        <summary>Ver datos crudos</summary>
-                        <pre style="font-size: 0.7em; white-space: pre-wrap;">${JSON.stringify(images, null, 2)}</pre>
-                    </details>
-                </div>`;
-        }
-
-        // Cargar Tips (Carrusel)
-        if (tipImages.length > 0) {
-            tipImages.forEach((image, index) => {
-                const slide = document.createElement('div');
-                slide.className = 'carousel-slide';
-                slide.setAttribute('data-index', index);
-                slide.innerHTML = `
-                    <div class="tip-content">
-                        <img src="${image.url}" alt="${image.title || 'Tip de Seguridad'}" class="tip-image" loading="lazy">
-                        <div class="tip-text">
-                            <h3>${image.title}</h3>
-                            <p>${image.description}</p>
-                        </div>
-                    </div>
-                `;
-                carouselTrack.appendChild(slide);
-
-                // Crear dots de navegación
-                const dot = document.createElement('span');
-                dot.className = 'dot';
-                dot.setAttribute('data-slide-index', index);
-                dot.addEventListener('click', () => moveToSlide(index));
-                carouselDots.appendChild(dot);
-            });
-
-            // Iniciar el carrusel después de cargar los tips
-            initCarousel();
-        } else {
-            carouselTrack.innerHTML = '<div style="padding: 20px;"><p style="text-align:center; color: var(--color-text-dark);">Aún no hay tips de seguridad cargados.</p></div>';
-            prevButton.style.display = 'none';
-            nextButton.style.display = 'none';
-        }
-
-    } catch (error) {
-        console.error('Error al cargar la media:', error);
-        galleryGrid.innerHTML = '<p style="text-align:center; color: red;">No se pudo cargar la galería debido a un error de conexión.</p>';
-    }
-}
-
-// --- 4. Funcionalidad del Carrusel ---
-let currentSlide = 0;
-let slides = []; // Almacenará los elementos '.carousel-slide'
-let track; // Elemento .carousel-track
-
-function initCarousel() {
-    slides = Array.from(carouselTrack.querySelectorAll('.carousel-slide'));
-    track = carouselTrack;
-
-    if (slides.length === 0) return;
-
-    // 4.1 Posicionar los slides inicialmente (Necesario para el cálculo)
-    slides.forEach((slide, index) => {
-        setSlidePosition(slide, index);
-    });
-
-    // 4.2 Establecer el dot activo inicial
-    updateDots();
-
-    // 4.3 Añadir Listeners de botones
-    prevButton.addEventListener('click', showPrevSlide);
-    nextButton.addEventListener('click', showNextSlide);
-
-    // 4.4 Listener de redimensionamiento para recalcular posiciones
-    window.addEventListener('resize', () => {
-        slides.forEach((slide, index) => {
-            setSlidePosition(slide, index);
-        });
-        updateTrackPosition();
-    });
-}
-
-function setSlidePosition(slide, index) {
-    // Calcula la posición horizontal de cada slide.
-    // Aunque el CSS flex ya los coloca, esta función recalcula el ancho.
-    slide.style.width = track.clientWidth + 'px';
-}
-
-function moveToSlide(targetIndex) {
-    if (slides.length === 0) return;
-
-    // Evita saltos si el índice no es válido
-    if (targetIndex < 0 || targetIndex >= slides.length) {
-        return;
-    }
-
-    currentSlide = targetIndex;
-    updateTrackPosition();
-    updateDots();
-}
-
-function updateTrackPosition() {
-    if (slides.length === 0) return;
-
-    // Mueve el track a la posición del slide actual
-    const offset = slides[currentSlide].offsetLeft;
-    track.style.transform = `translateX(-${offset}px)`;
-}
-
-function showPrevSlide() {
-    const newIndex = (currentSlide === 0) ? slides.length - 1 : currentSlide - 1;
-    moveToSlide(newIndex);
-}
-
-function showNextSlide() {
-    const newIndex = (currentSlide === slides.length - 1) ? 0 : currentSlide + 1;
-    moveToSlide(newIndex);
-}
-
-function updateDots() {
-    document.querySelectorAll('.dot').forEach((dot, index) => {
-        dot.classList.toggle('active', index === currentSlide);
-    });
-}
-
-// --- 5. Formulario de Contacto ---
-
-contactForm.addEventListener('submit', async function (event) {
-    event.preventDefault();
-
-    // Recoger datos del formulario
-    const name = document.getElementById('contactName').value;
-    const email = document.getElementById('contactEmail').value;
-    const phone = document.getElementById('contactPhone').value;
-    const message = document.getElementById('contactMessage').value;
-
-    contactMessageStatus.textContent = 'Enviando mensaje...';
-    contactMessageStatus.style.color = 'var(--color-accent)';
-
-    try {
-        const response = await fetch('/api/contact', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name, email, phone, message }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            contactMessageStatus.textContent = '¡Gracias! Mensaje enviado con éxito.';
-            contactMessageStatus.style.color = 'lightgreen';
-            contactForm.reset(); // Limpiar formulario
-        } else {
-            contactMessageStatus.textContent = data.message || 'Error al enviar el mensaje. Intenta de nuevo.';
-            contactMessageStatus.style.color = 'red';
-        }
-    } catch (error) {
-        console.error('Error de red:', error);
-        contactMessageStatus.textContent = 'Error de conexión con el servidor.';
-        contactMessageStatus.style.color = 'red';
-    }
-});
-
-
-// --- Inicialización al cargar la ventana ---
-window.addEventListener('load', async () => {
-    try {
-        // 1. Configurar el acordeón
-        setupAccordion();
-
-        // 2. Cargar media dinámica (inicia el carrusel internamente)
-        await loadMedia();
-    } catch (err) {
-        console.error("Critical initialization error:", err);
-    } finally {
-        // 3. Ocultar el preloader después de todo, pase lo que pase
-        hidePreloader();
-    }
-});
