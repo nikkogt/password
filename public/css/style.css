@@ -8,7 +8,7 @@
     /* Vibrant Orange */
     --color-primary-dark: #E64A19;
     /* Darker Orange for Hover */
-    --color-accent: #00E0FF;
+    --color-accent: #E64A19;
     /* Electric Blue */
 
     /* Backgrounds */
@@ -48,7 +48,7 @@ body {
 }
 
 a {
-    color: var(--color-text-dark);
+    color: var(--color-accent);
     text-decoration: none;
     transition: 0.3s;
 }
